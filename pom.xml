@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- FILE 01 of 28: pom.xml -->
+<!-- [F01-B01] Maven project and artifact coordinates -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>ph.bantaydagat</groupId>
+    <artifactId>bantaydagat</artifactId>
+    <version>1.0.0</version>
+
+    <!-- [F01-B02] Java release and JavaFX dependency version -->
+    <properties>
+        <maven.compiler.release>17</maven.compiler.release>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <javafx.version>17.0.17</javafx.version>
+    </properties>
+
+    <!-- [F01-B03] JavaFX controls, tables and charts -->
+    <dependencies>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>${javafx.version}</version>
+        </dependency>
+    </dependencies>
+
+    <!-- [F01-B04] Compile for Java 17 and point javafx:run to Main -->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.13.0</version>
+            </plugin>
+            <plugin>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>0.0.8</version>
+                <configuration>
+                    <mainClass>ph.bantaydagat.Main</mainClass> <!-- [F01-B04] JavaFX entry point -->
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
+
