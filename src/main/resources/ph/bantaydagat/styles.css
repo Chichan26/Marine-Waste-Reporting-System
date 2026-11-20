@@ -1,0 +1,468 @@
+/* FILE: src/main/resources/ph/bantaydagat/styles.css
+ * BantayDagat ocean theme. Loaded once by Main and applied to every view.
+ *
+ * Palette
+ *   Deep ocean  #0F4C5C   primary / sidebar
+ *   Seafoam     #1B9AAA   accent / focus / links
+ *   Mist        #F4F8F9   app background
+ *   Border      #DCE6EA
+ *   Ink         #1D2B33   body text
+ *   Muted       #5E7480   secondary text
+ */
+
+/* ---------- Base ---------- */
+.root {
+    -bd-primary: #0F4C5C;
+    -bd-primary-dark: #0A3642;
+    -bd-accent: #1B9AAA;
+    -bd-bg: #F4F8F9;
+    -bd-surface: #FFFFFF;
+    -bd-border: #DCE6EA;
+    -bd-ink: #1D2B33;
+    -bd-muted: #5E7480;
+
+    -fx-font-family: "System";
+    -fx-font-size: 13px;
+    -fx-background-color: -bd-bg;
+    -fx-text-fill: -bd-ink;
+    -fx-accent: -bd-accent;
+    -fx-focus-color: -bd-accent;
+    -fx-faint-focus-color: rgba(27, 154, 170, 0.18);
+}
+
+.label {
+    -fx-text-fill: -bd-ink;
+}
+
+.page {
+    -fx-background-color: -bd-bg;
+}
+
+.page-title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -bd-primary;
+}
+
+.page-subtitle, .muted {
+    -fx-text-fill: -bd-muted;
+}
+
+.section-title {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -bd-primary;
+}
+
+.field-label {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -bd-muted;
+}
+
+/* ---------- Cards ---------- */
+.card {
+    -fx-background-color: -bd-surface;
+    -fx-background-radius: 12;
+    -fx-border-color: -bd-border;
+    -fx-border-radius: 12;
+    -fx-effect: dropshadow(gaussian, rgba(15, 76, 92, 0.08), 14, 0, 0, 3);
+}
+
+.transparent-scroll, .transparent-scroll > .viewport {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+    -fx-padding: 0;
+}
+
+/* ---------- Inputs ---------- */
+.text-field, .password-field, .text-area, .combo-box-base {
+    -fx-background-color: -bd-surface;
+    -fx-background-radius: 8;
+    -fx-border-color: -bd-border;
+    -fx-border-radius: 8;
+    -fx-padding: 7 10 7 10;
+}
+
+.text-area {
+    -fx-padding: 2;
+}
+
+.text-area .content {
+    -fx-background-color: -bd-surface;
+    -fx-background-radius: 8;
+}
+
+.text-field:focused, .password-field:focused, .text-area:focused, .combo-box-base:focused {
+    -fx-border-color: -bd-accent;
+    -fx-border-width: 1.5;
+}
+
+.combo-box-base {
+    -fx-padding: 2 4 2 4;
+}
+
+/* ---------- Buttons ---------- */
+.button, .toggle-button {
+    -fx-background-color: -bd-surface;
+    -fx-background-radius: 8;
+    -fx-border-color: -bd-border;
+    -fx-border-radius: 8;
+    -fx-text-fill: -bd-primary;
+    -fx-font-weight: bold;
+    -fx-padding: 8 16 8 16;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: #EAF4F6;
+}
+
+.button:disabled {
+    -fx-opacity: 0.45;
+}
+
+.btn-primary {
+    -fx-background-color: -bd-primary;
+    -fx-border-color: -bd-primary;
+    -fx-text-fill: white;
+}
+
+.btn-primary:hover {
+    -fx-background-color: -bd-accent;
+    -fx-border-color: -bd-accent;
+}
+
+.btn-ghost {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-text-fill: -bd-accent;
+}
+
+.btn-ghost:hover {
+    -fx-background-color: rgba(27, 154, 170, 0.10);
+}
+
+/* ---------- App shell ---------- */
+.top-bar {
+    -fx-background-color: -bd-surface;
+    -fx-border-color: transparent transparent -bd-border transparent;
+}
+
+.top-bar-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -bd-primary;
+}
+
+.user-pill {
+    -fx-background-color: #E3F3F6;
+    -fx-background-radius: 999;
+    -fx-padding: 5 12 5 12;
+    -fx-text-fill: -bd-primary;
+    -fx-font-weight: bold;
+}
+
+.sidebar {
+    -fx-background-color: linear-gradient(to bottom, #0F4C5C, #0A3642);
+}
+
+.brand {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.brand-tagline {
+    -fx-font-size: 11px;
+    -fx-text-fill: rgba(255, 255, 255, 0.65);
+}
+
+.nav-section {
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+    -fx-text-fill: rgba(255, 255, 255, 0.5);
+}
+
+.nav-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-text-fill: rgba(255, 255, 255, 0.82);
+    -fx-font-weight: normal;
+    -fx-font-size: 13px;
+    -fx-alignment: center-left;
+    -fx-padding: 10 14 10 14;
+    -fx-background-radius: 8;
+}
+
+.nav-button:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.08);
+}
+
+.nav-button:selected {
+    -fx-background-color: rgba(255, 255, 255, 0.16);
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-border-color: transparent transparent transparent #5FD3DF;
+    -fx-border-width: 0 0 0 3;
+}
+
+/* ---------- Login ---------- */
+.login-hero {
+    -fx-background-color: linear-gradient(to bottom right, #0F4C5C, #1B9AAA);
+}
+
+.hero-title {
+    -fx-font-size: 40px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.hero-text {
+    -fx-font-size: 15px;
+    -fx-text-fill: rgba(255, 255, 255, 0.88);
+}
+
+.hero-point {
+    -fx-font-size: 13px;
+    -fx-text-fill: rgba(255, 255, 255, 0.92);
+}
+
+.demo-hint {
+    -fx-background-color: #F4F8F9;
+    -fx-background-radius: 8;
+    -fx-padding: 10;
+    -fx-font-size: 11px;
+    -fx-text-fill: -bd-muted;
+}
+
+/* ---------- Banners ---------- */
+.banner {
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-padding: 12 14 12 14;
+}
+
+.banner-info {
+    -fx-background-color: #E6F4F7;
+    -fx-border-color: #BFE3EA;
+}
+
+.banner-success {
+    -fx-background-color: #E5F5EC;
+    -fx-border-color: #B5E0C7;
+}
+
+.banner-success .label {
+    -fx-text-fill: #1F6B47;
+}
+
+.banner-danger {
+    -fx-background-color: #FDECEC;
+    -fx-border-color: #F5C2C0;
+}
+
+.banner-danger .label {
+    -fx-text-fill: #8E2B28;
+}
+
+/* ---------- Badges ---------- */
+.badge {
+    -fx-background-radius: 999;
+    -fx-padding: 3 10 3 10;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+}
+
+.severity-low      { -fx-background-color: #E5F5EC; -fx-text-fill: #1F6B47; }
+.severity-medium   { -fx-background-color: #FFF4DE; -fx-text-fill: #8A5A00; }
+.severity-high     { -fx-background-color: #FDE8D7; -fx-text-fill: #A3470D; }
+.severity-critical { -fx-background-color: #FDECEC; -fx-text-fill: #A52A26; }
+
+.status-submitted    { -fx-background-color: #EEF1F4; -fx-text-fill: #46525C; }
+.status-under-review { -fx-background-color: #E6F0FB; -fx-text-fill: #1E5A9C; }
+.status-dispatched   { -fx-background-color: #FFF4DE; -fx-text-fill: #8A5A00; }
+.status-resolved     { -fx-background-color: #E5F5EC; -fx-text-fill: #1F6B47; }
+
+/* ---------- Tables ---------- */
+.table-view {
+    -fx-background-color: -bd-surface;
+    -fx-background-radius: 12;
+    -fx-border-color: -bd-border;
+    -fx-border-radius: 12;
+    -fx-padding: 4;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: -bd-surface;
+    -fx-background-radius: 12 12 0 0;
+}
+
+.table-view .column-header, .table-view .filler {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent transparent -bd-border transparent;
+    -fx-size: 38px;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: -bd-muted;
+    -fx-font-weight: bold;
+    -fx-font-size: 11px;
+    -fx-alignment: center-left;
+}
+
+.table-row-cell {
+    -fx-background-color: -bd-surface;
+    -fx-border-color: transparent transparent #EEF3F5 transparent;
+    -fx-cell-size: 40px;
+}
+
+.table-row-cell:hover {
+    -fx-background-color: #F2F9FA;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #DDF0F3;
+}
+
+.table-row-cell:selected .table-cell {
+    -fx-text-fill: -bd-ink;
+}
+
+.table-cell {
+    -fx-padding: 0 10 0 10;
+    -fx-alignment: center-left;
+    -fx-border-color: transparent;
+}
+
+.mono {
+    -fx-font-family: "Menlo", "Monospaced";
+}
+
+/* ---------- Report details ---------- */
+.detail-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -bd-primary;
+}
+
+.detail-key {
+    -fx-text-fill: -bd-muted;
+    -fx-font-size: 12px;
+}
+
+.detail-value {
+    -fx-font-weight: bold;
+}
+
+.thumbnail {
+    -fx-background-color: #F4F8F9;
+    -fx-background-radius: 10;
+    -fx-border-color: -bd-border;
+    -fx-border-radius: 10;
+    -fx-padding: 8;
+}
+
+.empty-state {
+    -fx-text-fill: -bd-muted;
+    -fx-font-size: 13px;
+}
+
+/* ---------- Dashboard ---------- */
+.kpi-card {
+    -fx-padding: 18;
+}
+
+.kpi-value {
+    -fx-font-size: 30px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -bd-primary;
+}
+
+.kpi-label {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -bd-muted;
+}
+
+.kpi-accent-teal     { -fx-border-color: -bd-border -bd-border -bd-border #1B9AAA; -fx-border-width: 1 1 1 4; }
+.kpi-accent-amber    { -fx-border-color: -bd-border -bd-border -bd-border #F0AD4E; -fx-border-width: 1 1 1 4; }
+.kpi-accent-red      { -fx-border-color: -bd-border -bd-border -bd-border #D9534F; -fx-border-width: 1 1 1 4; }
+.kpi-accent-green    { -fx-border-color: -bd-border -bd-border -bd-border #2E9E6B; -fx-border-width: 1 1 1 4; }
+
+.chart {
+    -fx-padding: 8;
+}
+
+.chart-title {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -bd-primary;
+}
+
+.chart-plot-background {
+    -fx-background-color: transparent;
+}
+
+.chart-vertical-grid-lines {
+    -fx-stroke: transparent;
+}
+
+.chart-horizontal-grid-lines {
+    -fx-stroke: #EEF3F5;
+}
+
+.default-color0.chart-bar {
+    -fx-bar-fill: #1B9AAA;
+    -fx-background-radius: 6 6 0 0;
+}
+
+.default-color0.chart-pie { -fx-pie-color: #F0AD4E; }
+.default-color1.chart-pie { -fx-pie-color: #2E9E6B; }
+
+.chart-legend {
+    -fx-background-color: transparent;
+}
+
+/* ---------- Hotlines ---------- */
+.hotline-name {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -bd-ink;
+}
+
+.hotline-number {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -bd-primary;
+}
+
+.hyperlink {
+    -fx-text-fill: -bd-accent;
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+}
+
+/* ---------- Dialogs & split panes ---------- */
+.dialog-pane {
+    -fx-background-color: -bd-surface;
+}
+
+.split-pane {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+.split-pane > .split-pane-divider {
+    -fx-background-color: transparent;
+    -fx-padding: 0 6 0 6;
+}
+
+.scroll-bar {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #C9D7DC;
+    -fx-background-radius: 999;
+}

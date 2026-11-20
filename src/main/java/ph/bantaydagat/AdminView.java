@@ -33,23 +33,26 @@ public final class AdminView extends VBox {
     private final ComboBox<String> sort = new ComboBox<>();
 
     // [F24-B04] Selected report and available actions
-    private final TextArea details = new TextArea();
-    private final Button advance = new Button("Advance status");
+    private final ReportDetailsCard details;
+    private final Button advance = ViewSupport.primaryButton("Advance status");
     private final Button attachment = new Button("Open attachment");
-    private final Button before = new Button("Open before photo");
-    private final Button after = new Button("Open after photo");
+    private final Button before = new Button("Before photo");
+    private final Button after = new Button("After photo");
 
     // [F24-B05] Construct the queue, detail panel and actions
     public AdminView(IncidentManager manager, Runnable onChanged) {
         this.manager = manager;
         this.onChanged = onChanged;
-        setSpacing(12);
-        setPadding(new javafx.geometry.Insets(20));
+        this.details = new ReportDetailsCard(manager);
+        setSpacing(16);
+        setPadding(new javafx.geometry.Insets(24));
+        getStyleClass().add("page");
         SplitPane panels = new SplitPane(table, createDetailsPanel());
-        panels.setOrientation(Orientation.VERTICAL);
-        panels.setDividerPositions(0.55);
+        panels.setOrientation(Orientation.HORIZONTAL);
+        panels.setDividerPositions(0.58);
         VBox.setVgrow(panels, Priority.ALWAYS);
-        getChildren().addAll(ViewSupport.title("Incident queue"), createFilters(), panels);
+        getChildren().addAll(ViewSupport.header("Incident queue",
+                "Triage incoming reports, dispatch responders and log cleanups."), createFilters(), panels);
         refresh();
     }
 
@@ -61,9 +64,16 @@ public final class AdminView extends VBox {
         sort.getItems().setAll("Severity (highest first)", "Status", "Category", "Newest");
         sort.getSelectionModel().selectFirst();
         sort.setOnAction(event -> refresh());
-        Button clear = new Button("Clear filters");
+        Button clear = ViewSupport.ghostButton("Clear filters");
         clear.setOnAction(event -> clearFilters()); // [F24-B06] Restore the full queue
-        return new HBox(8, severity, status, category, new Label("Sort by"), sort, clear);
+        javafx.scene.layout.Region spacer = new javafx.scene.layout.Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+        HBox bar = new HBox(10, ViewSupport.styled(new Label("Filter"), "field-label"), severity, status,
+                category, clear, spacer, ViewSupport.styled(new Label("Sort by"), "field-label"), sort);
+        bar.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
+        bar.setPadding(new javafx.geometry.Insets(12, 16, 12, 16));
+        bar.getStyleClass().add("card");
+        return bar;
     }
 
     // [F24-B07] Add enum options and a placeholder for the unfiltered state
@@ -83,10 +93,6 @@ public final class AdminView extends VBox {
 
     // [F24-B09] Wire details and actions to the selected report
     private VBox createDetailsPanel() {
-        details.setEditable(false);
-        details.setWrapText(true);
-        details.setPromptText("Select a report to see its details.");
-        details.setMinHeight(80);
         VBox.setVgrow(details, Priority.ALWAYS);
         table.getSelectionModel().selectedItemProperty().addListener((obs, old, report) -> showDetails(report));
         advance.setOnAction(event -> advanceSelected()); // [F24-B09] Change the selected status
@@ -94,12 +100,18 @@ public final class AdminView extends VBox {
         before.setOnAction(event -> open(selected().getResolutionLog().beforePhotoPath()));
         after.setOnAction(event -> open(selected().getResolutionLog().afterPhotoPath()));
         showDetails(null);
-        return new VBox(8, details, new HBox(8, advance, attachment, before, after));
+        advance.setMaxWidth(Double.MAX_VALUE);
+        HBox files = new HBox(8, attachment, before, after);
+        VBox actions = new VBox(8, advance, files);
+        actions.setPadding(new javafx.geometry.Insets(12, 0, 0, 0));
+        VBox panel = new VBox(details, actions);
+        panel.setMinWidth(300);
+        return panel;
     }
 
     // [F24-B10] Show the report, resolution log and available actions
     private void showDetails(Report report) {
-        details.setText(report == null ? "" : report.exportReport());
+        details.show(report);
         Status next = report == null ? null : report.getStatus().next();
         advance.setText(next == null ? "Advance status" : "Move to " + next);
         advance.setDisable(next == null);
@@ -157,6 +169,8 @@ public final class AdminView extends VBox {
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.initOwner(getScene().getWindow());
         dialog.setTitle("Resolve incident");
+        dialog.setHeaderText("Log the cleanup for report #" + report.getReportID().substring(0, 8));
+        dialog.getDialogPane().getStylesheets().addAll(getScene().getStylesheets()); // [F24-B15] Same theme
         TextArea notes = new TextArea();
         notes.setPromptText("Describe the cleanup work.");
         notes.setPrefRowCount(4);
