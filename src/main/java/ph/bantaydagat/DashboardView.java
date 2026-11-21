@@ -21,6 +21,9 @@ public final class DashboardView extends ScrollPane {
     private final Label active = kpiValue();
     private final Label critical = kpiValue();
     private final Label resolvedRate = kpiValue();
+    private final long[] kpiShown = new long[4]; // [F25-B02] Values currently on screen (count-up start)
+    private final long[] kpiTarget = new long[4]; // [F25-B02] Latest values (count-up end)
+    private boolean noReports; // [F25-B02] Resolution rate shows a dash when there is no data
     private final PieChart statusChart = new PieChart();
     private final BarChart<String, Number> categoryChart = new BarChart<>(new CategoryAxis(), new NumberAxis());
 
@@ -28,7 +31,7 @@ public final class DashboardView extends ScrollPane {
     public DashboardView(IncidentManager manager) {
         this.manager = manager;
         configureCharts();
-        HBox kpis = new HBox(16, kpiCard("TOTAL REPORTS", total, "kpi-accent-teal"),
+        HBox kpis = new HBox(16, kpiCard("TOTAL REPORTS", total, "kpi-accent-ocean"),
                 kpiCard("ACTIVE INCIDENTS", active, "kpi-accent-amber"),
                 kpiCard("CRITICAL OPEN", critical, "kpi-accent-red"),
                 kpiCard("RESOLUTION RATE", resolvedRate, "kpi-accent-green"));
@@ -44,6 +47,12 @@ public final class DashboardView extends ScrollPane {
         setFitToWidth(true);
         getStyleClass().add("transparent-scroll");
         refresh();
+        // [F25-B03] Replay the KPI count-up every time the dashboard is opened
+        sceneProperty().addListener((obs, old, scene) -> {
+            if (scene != null) {
+                animateKpis(true);
+            }
+        });
     }
 
     // [F25-B04] Label charts and disable animation during updates
@@ -67,6 +76,7 @@ public final class DashboardView extends ScrollPane {
         VBox card = ViewSupport.card(ViewSupport.styled(new Label(label), "kpi-label"), value);
         card.setSpacing(6);
         card.getStyleClass().addAll("kpi-card", accent);
+        Motion.hoverLift(card); // [F25-B04] Gentle lift on hover
         card.setMaxWidth(Double.MAX_VALUE);
         HBox.setHgrow(card, Priority.ALWAYS);
         return card;
@@ -90,10 +100,26 @@ public final class DashboardView extends ScrollPane {
         long resolved = reports.stream().filter(report -> report.getStatus() == Status.RESOLVED).count();
         long criticalOpen = reports.stream().filter(report -> report.getStatus() != Status.RESOLVED
                 && report.getSeverityLevel() == Severity.CRITICAL).count();
-        total.setText(String.valueOf(reports.size()));
-        active.setText(String.valueOf(reports.size() - resolved));
-        critical.setText(String.valueOf(criticalOpen));
-        resolvedRate.setText(reports.isEmpty() ? "—" : Math.round(100.0 * resolved / reports.size()) + "%");
+        kpiTarget[0] = reports.size();
+        kpiTarget[1] = reports.size() - resolved;
+        kpiTarget[2] = criticalOpen;
+        kpiTarget[3] = reports.isEmpty() ? 0 : Math.round(100.0 * resolved / reports.size());
+        noReports = reports.isEmpty();
+        animateKpis(false);
+    }
+
+    // [F25-B05] Count each KPI up to its target, from zero or from the value already shown
+    private void animateKpis(boolean fromZero) {
+        Label[] labels = {total, active, critical, resolvedRate};
+        for (int i = 0; i < labels.length; i++) {
+            long from = fromZero ? 0 : kpiShown[i];
+            kpiShown[i] = kpiTarget[i];
+            if (i == 3 && noReports) {
+                Motion.countUp(labels[i], 0, 0, value -> "—");
+            } else {
+                Motion.countUp(labels[i], from, kpiTarget[i], i == 3 ? value -> value + "%" : String::valueOf);
+            }
+        }
     }
 
     // [F25-B06] Count all unresolved statuses as active

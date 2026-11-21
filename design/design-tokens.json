@@ -1,0 +1,179 @@
+{
+  "$schema": "https://design-tokens.org/schema.json",
+  "$description": "BantayDagat 'Ocean' design tokens. Source of truth for src/main/resources/ph/bantaydagat/styles.css. JavaFX names: primitive.color.ocean.600 -> -bd-ocean-600, semantic.color.primary -> -bd-color-primary, component.button.primary.bg -> -bd-button-primary-bg.",
+  "primitive": {
+    "color": {
+      "ocean": {
+        "50":  { "$value": "#F0F7FC", "$type": "color", "$description": "Sea foam - tinted surfaces" },
+        "100": { "$value": "#DCEEF9", "$type": "color", "$description": "Shallows - pills, selected rows" },
+        "200": { "$value": "#B9DCF2", "$type": "color" },
+        "300": { "$value": "#85C2E8", "$type": "color" },
+        "400": { "$value": "#4AA1D9", "$type": "color" },
+        "500": { "$value": "#2183C4", "$type": "color", "$description": "Open water - accent, focus" },
+        "600": { "$value": "#1468A6", "$type": "color", "$description": "Reef blue - primary" },
+        "700": { "$value": "#105486", "$type": "color", "$description": "Primary hover" },
+        "800": { "$value": "#0E446D", "$type": "color", "$description": "Primary pressed / sidebar top" },
+        "900": { "$value": "#0C3657", "$type": "color", "$description": "Deep sea - sidebar bottom" },
+        "950": { "$value": "#072238", "$type": "color", "$description": "Abyss" }
+      },
+      "aqua": {
+        "100": { "$value": "#D5F3FA", "$type": "color" },
+        "300": { "$value": "#7AD7EE", "$type": "color", "$description": "Wave crest - highlight on dark" },
+        "500": { "$value": "#1BAFD6", "$type": "color" },
+        "700": { "$value": "#0B7A99", "$type": "color" }
+      },
+      "mist": {
+        "0":   { "$value": "#FFFFFF", "$type": "color" },
+        "50":  { "$value": "#F5F9FC", "$type": "color", "$description": "App background" },
+        "100": { "$value": "#EAF1F7", "$type": "color" },
+        "200": { "$value": "#DAE5EE", "$type": "color", "$description": "Default border" },
+        "300": { "$value": "#C3D3E0", "$type": "color" },
+        "400": { "$value": "#94A9BB", "$type": "color" },
+        "500": { "$value": "#64798C", "$type": "color", "$description": "Muted text (4.6:1 on white)" },
+        "600": { "$value": "#4A5E70", "$type": "color" },
+        "700": { "$value": "#364857", "$type": "color" },
+        "800": { "$value": "#233340", "$type": "color" },
+        "900": { "$value": "#15222D", "$type": "color", "$description": "Ink - body text" }
+      },
+      "kelp":  { "50": { "$value": "#E6F6EE", "$type": "color" }, "200": { "$value": "#B5E0C7", "$type": "color" }, "500": { "$value": "#2E9E6B", "$type": "color" }, "800": { "$value": "#1F6B47", "$type": "color" } },
+      "sand":  { "50": { "$value": "#FFF6E0", "$type": "color" }, "200": { "$value": "#F5DDA6", "$type": "color" }, "500": { "$value": "#E9A23B", "$type": "color" }, "800": { "$value": "#8A5A00", "$type": "color" } },
+      "reef":  { "50": { "$value": "#FDEBDD", "$type": "color" }, "200": { "$value": "#F6CBA9", "$type": "color" }, "500": { "$value": "#E8782E", "$type": "color" }, "800": { "$value": "#A3470D", "$type": "color" } },
+      "coral": { "50": { "$value": "#FDEDEC", "$type": "color" }, "200": { "$value": "#F5C2C0", "$type": "color" }, "500": { "$value": "#D64545", "$type": "color" }, "800": { "$value": "#8E2724", "$type": "color" } },
+      "alpha": {
+        "white-08":    { "$value": "rgba(255,255,255,0.08)", "$type": "color" },
+        "white-16":    { "$value": "rgba(255,255,255,0.16)", "$type": "color" },
+        "white-50":    { "$value": "rgba(255,255,255,0.50)", "$type": "color" },
+        "white-65":    { "$value": "rgba(255,255,255,0.65)", "$type": "color" },
+        "white-82":    { "$value": "rgba(255,255,255,0.82)", "$type": "color" },
+        "white-92":    { "$value": "rgba(255,255,255,0.92)", "$type": "color" },
+        "ocean-500-10": { "$value": "rgba(33,131,196,0.10)", "$type": "color" },
+        "ocean-500-20": { "$value": "rgba(33,131,196,0.20)", "$type": "color" },
+        "ocean-900-08": { "$value": "rgba(12,54,87,0.08)", "$type": "color" },
+        "ocean-900-14": { "$value": "rgba(12,54,87,0.14)", "$type": "color" }
+      }
+    },
+    "spacing": {
+      "1": { "$value": "4px",  "$type": "dimension" },
+      "2": { "$value": "8px",  "$type": "dimension" },
+      "3": { "$value": "12px", "$type": "dimension" },
+      "4": { "$value": "16px", "$type": "dimension" },
+      "5": { "$value": "20px", "$type": "dimension" },
+      "6": { "$value": "24px", "$type": "dimension" },
+      "8": { "$value": "32px", "$type": "dimension" }
+    },
+    "fontSize": {
+      "2xs": { "$value": "10px", "$type": "dimension" },
+      "xs":  { "$value": "11px", "$type": "dimension" },
+      "sm":  { "$value": "12px", "$type": "dimension" },
+      "base":{ "$value": "13px", "$type": "dimension" },
+      "md":  { "$value": "14px", "$type": "dimension" },
+      "lg":  { "$value": "16px", "$type": "dimension" },
+      "xl":  { "$value": "18px", "$type": "dimension" },
+      "2xl": { "$value": "22px", "$type": "dimension" },
+      "3xl": { "$value": "24px", "$type": "dimension" },
+      "4xl": { "$value": "30px", "$type": "dimension" },
+      "5xl": { "$value": "40px", "$type": "dimension" }
+    },
+    "radius": {
+      "sm":   { "$value": "6px",   "$type": "dimension" },
+      "md":   { "$value": "8px",   "$type": "dimension" },
+      "lg":   { "$value": "10px",  "$type": "dimension" },
+      "xl":   { "$value": "12px",  "$type": "dimension" },
+      "full": { "$value": "999px", "$type": "dimension" }
+    },
+    "shadow": {
+      "card": { "$value": "dropshadow(gaussian, {primitive.color.alpha.ocean-900-08}, 14, 0, 0, 3)", "$type": "shadow" },
+      "raised": { "$value": "dropshadow(gaussian, {primitive.color.alpha.ocean-900-14}, 18, 0, 0, 6)", "$type": "shadow" }
+    },
+    "motion": {
+      "$description": "Implemented in Motion.java. Disable all with -Dbantaydagat.motion=off.",
+      "fast":    { "$value": "150ms", "$type": "duration", "$description": "Hover lift, button press" },
+      "normal":  { "$value": "220ms", "$type": "duration" },
+      "slow":    { "$value": "300ms", "$type": "duration", "$description": "Screen/card/banner enter, shake" },
+      "count":   { "$value": "700ms", "$type": "duration", "$description": "KPI count-up" },
+      "stagger": { "$value": "60ms",  "$type": "duration", "$description": "Delay between items in a group" },
+      "ease-out":    { "$value": [0.16, 1, 0.3, 1],   "$type": "cubicBezier" },
+      "ease-in-out": { "$value": [0.65, 0, 0.35, 1],  "$type": "cubicBezier" },
+      "enter-offset": { "$value": "10px", "$type": "dimension" },
+      "wave": {
+        "back":  { "$value": { "wavelength": 520, "height": 150, "amplitude": 26, "period": "18s" } },
+        "mid":   { "$value": { "wavelength": 420, "height": 110, "amplitude": 20, "period": "13s", "direction": "reverse" } },
+        "front": { "$value": { "wavelength": 340, "height": 72,  "amplitude": 14, "period": "9s" } }
+      }
+    }
+  },
+  "semantic": {
+    "color": {
+      "bg":               { "$value": "{primitive.color.mist.50}" },
+      "surface":          { "$value": "{primitive.color.mist.0}" },
+      "surface-subtle":   { "$value": "{primitive.color.mist.50}" },
+      "surface-tint":     { "$value": "{primitive.color.ocean.50}" },
+      "border":           { "$value": "{primitive.color.mist.200}" },
+      "border-subtle":    { "$value": "{primitive.color.mist.100}" },
+      "border-strong":    { "$value": "{primitive.color.mist.300}" },
+      "text":             { "$value": "{primitive.color.mist.900}" },
+      "text-muted":       { "$value": "{primitive.color.mist.500}" },
+      "text-inverse":     { "$value": "{primitive.color.mist.0}" },
+      "primary":          { "$value": "{primitive.color.ocean.600}" },
+      "primary-hover":    { "$value": "{primitive.color.ocean.700}" },
+      "primary-pressed":  { "$value": "{primitive.color.ocean.800}" },
+      "primary-subtle":   { "$value": "{primitive.color.ocean.100}" },
+      "on-primary":       { "$value": "{primitive.color.mist.0}" },
+      "accent":           { "$value": "{primitive.color.ocean.500}" },
+      "highlight":        { "$value": "{primitive.color.aqua.300}" },
+      "focus":            { "$value": "{primitive.color.ocean.500}" },
+      "focus-faint":      { "$value": "{primitive.color.alpha.ocean-500-20}" },
+      "info-bg":          { "$value": "{primitive.color.ocean.50}" },
+      "info-border":      { "$value": "{primitive.color.ocean.200}" },
+      "info-text":        { "$value": "{primitive.color.ocean.800}" },
+      "success":          { "$value": "{primitive.color.kelp.500}" },
+      "success-bg":       { "$value": "{primitive.color.kelp.50}" },
+      "success-border":   { "$value": "{primitive.color.kelp.200}" },
+      "success-text":     { "$value": "{primitive.color.kelp.800}" },
+      "warning":          { "$value": "{primitive.color.sand.500}" },
+      "warning-bg":       { "$value": "{primitive.color.sand.50}" },
+      "warning-border":   { "$value": "{primitive.color.sand.200}" },
+      "warning-text":     { "$value": "{primitive.color.sand.800}" },
+      "danger":           { "$value": "{primitive.color.coral.500}" },
+      "danger-bg":        { "$value": "{primitive.color.coral.50}" },
+      "danger-border":    { "$value": "{primitive.color.coral.200}" },
+      "danger-text":      { "$value": "{primitive.color.coral.800}" },
+      "neutral-bg":       { "$value": "{primitive.color.mist.100}" },
+      "neutral-text":     { "$value": "{primitive.color.mist.600}" }
+    }
+  },
+  "component": {
+    "sidebar":  { "bg-start": { "$value": "{primitive.color.ocean.800}" }, "bg-end": { "$value": "{primitive.color.ocean.950}" } },
+    "nav":      { "fg": { "$value": "{primitive.color.alpha.white-82}" }, "hover-bg": { "$value": "{primitive.color.alpha.white-08}" }, "selected-bg": { "$value": "{primitive.color.alpha.white-16}" }, "indicator": { "$value": "{semantic.color.highlight}" } },
+    "hero":     { "bg-start": { "$value": "{primitive.color.ocean.900}" }, "bg-end": { "$value": "{primitive.color.ocean.500}" } },
+    "wave":     { "back": { "$value": "rgba(255,255,255,0.06)" }, "mid": { "$value": "rgba(122,215,238,0.16)" }, "front": { "$value": "rgba(255,255,255,0.10)" } },
+    "button": {
+      "bg": { "$value": "{semantic.color.surface}" }, "fg": { "$value": "{semantic.color.primary}" }, "border": { "$value": "{semantic.color.border}" },
+      "hover-bg": { "$value": "{semantic.color.surface-tint}" }, "pressed-bg": { "$value": "{semantic.color.primary-subtle}" },
+      "primary": { "bg": { "$value": "{semantic.color.primary}" }, "hover-bg": { "$value": "{semantic.color.primary-hover}" }, "pressed-bg": { "$value": "{semantic.color.primary-pressed}" }, "fg": { "$value": "{semantic.color.on-primary}" } },
+      "ghost":   { "fg": { "$value": "{semantic.color.accent}" }, "hover-bg": { "$value": "{primitive.color.alpha.ocean-500-10}" } },
+      "radius": { "$value": "{primitive.radius.md}" }, "padding": { "$value": "8px 16px" }
+    },
+    "input": { "bg": { "$value": "{semantic.color.surface}" }, "border": { "$value": "{semantic.color.border}" }, "border-focus": { "$value": "{semantic.color.focus}" }, "radius": { "$value": "{primitive.radius.md}" }, "padding": { "$value": "7px 10px" } },
+    "card":  { "bg": { "$value": "{semantic.color.surface}" }, "border": { "$value": "{semantic.color.border}" }, "shadow": { "$value": "{primitive.shadow.card}" }, "radius": { "$value": "{primitive.radius.xl}" } },
+    "table": { "row-hover": { "$value": "{semantic.color.surface-tint}" }, "row-selected": { "$value": "{semantic.color.primary-subtle}" }, "row-divider": { "$value": "{semantic.color.border-subtle}" } },
+    "chart": {
+      "series-1": { "$value": "{primitive.color.ocean.500}" },
+      "series-2": { "$value": "{primitive.color.aqua.500}" },
+      "active":   { "$value": "{semantic.color.warning}" },
+      "resolved": { "$value": "{semantic.color.success}" },
+      "grid":     { "$value": "{semantic.color.border-subtle}" }
+    },
+    "kpi": { "ocean": { "$value": "{semantic.color.accent}" }, "amber": { "$value": "{semantic.color.warning}" }, "red": { "$value": "{semantic.color.danger}" }, "green": { "$value": "{semantic.color.success}" } },
+    "badge": {
+      "severity-low":      { "bg": { "$value": "{semantic.color.success-bg}" }, "fg": { "$value": "{semantic.color.success-text}" } },
+      "severity-medium":   { "bg": { "$value": "{semantic.color.warning-bg}" }, "fg": { "$value": "{semantic.color.warning-text}" } },
+      "severity-high":     { "bg": { "$value": "{primitive.color.reef.50}" },   "fg": { "$value": "{primitive.color.reef.800}" } },
+      "severity-critical": { "bg": { "$value": "{semantic.color.danger-bg}" },  "fg": { "$value": "{semantic.color.danger-text}" } },
+      "status-submitted":    { "bg": { "$value": "{semantic.color.neutral-bg}" },     "fg": { "$value": "{semantic.color.neutral-text}" } },
+      "status-under-review": { "bg": { "$value": "{semantic.color.primary-subtle}" }, "fg": { "$value": "{primitive.color.ocean.800}" } },
+      "status-dispatched":   { "bg": { "$value": "{semantic.color.warning-bg}" },     "fg": { "$value": "{semantic.color.warning-text}" } },
+      "status-resolved":     { "bg": { "$value": "{semantic.color.success-bg}" },     "fg": { "$value": "{semantic.color.success-text}" } }
+    }
+  }
+}

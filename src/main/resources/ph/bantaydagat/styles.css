@@ -1,72 +1,227 @@
 /* FILE: src/main/resources/ph/bantaydagat/styles.css
- * BantayDagat ocean theme. Loaded once by Main and applied to every view.
+ * BantayDagat "Ocean" design system. Loaded once by Main and applied to every view.
  *
- * Palette
- *   Deep ocean  #0F4C5C   primary / sidebar
- *   Seafoam     #1B9AAA   accent / focus / links
- *   Mist        #F4F8F9   app background
- *   Border      #DCE6EA
- *   Ink         #1D2B33   body text
- *   Muted       #5E7480   secondary text
+ * Source of truth: design/design-tokens.json   Docs: docs/design-system.md
+ *
+ * JavaFX has no var(); "looked-up colors" declared on .root play that role.
+ * Three layers, each referencing only the layer below it:
+ *   1. Primitive  -bd-ocean-600        raw palette values (ONLY place hex lives)
+ *   2. Semantic   -bd-color-primary    purpose aliases (change these to re-theme)
+ *   3. Component  -bd-button-primary-bg per-component hooks
+ * Rules below .root must use semantic/component tokens, never raw hex.
+ *
+ * Non-color scales (looked-up values only work for paints, so these are fixed values):
+ *   Spacing  4 8 12 16 20 24 32
+ *   Radius   sm 6 | md 8 | lg 10 | xl 12 | full 999
+ *   Type     2xs 10 | xs 11 | sm 12 | base 13 | md 14 | lg 16 | xl 18 | 2xl 22 | 3xl 24 | 4xl 30 | 5xl 40
  */
 
-/* ---------- Base ---------- */
 .root {
-    -bd-primary: #0F4C5C;
-    -bd-primary-dark: #0A3642;
-    -bd-accent: #1B9AAA;
-    -bd-bg: #F4F8F9;
-    -bd-surface: #FFFFFF;
-    -bd-border: #DCE6EA;
-    -bd-ink: #1D2B33;
-    -bd-muted: #5E7480;
+    /* ===== 1. PRIMITIVE ===== */
+    /* Ocean - brand blues, light (shallows) to dark (abyss) */
+    -bd-ocean-50:  #F0F7FC;
+    -bd-ocean-100: #DCEEF9;
+    -bd-ocean-200: #B9DCF2;
+    -bd-ocean-300: #85C2E8;
+    -bd-ocean-400: #4AA1D9;
+    -bd-ocean-500: #2183C4;
+    -bd-ocean-600: #1468A6;
+    -bd-ocean-700: #105486;
+    -bd-ocean-800: #0E446D;
+    -bd-ocean-900: #0C3657;
+    -bd-ocean-950: #072238;
 
+    /* Aqua - wave-crest highlights */
+    -bd-aqua-100: #D5F3FA;
+    -bd-aqua-300: #7AD7EE;
+    -bd-aqua-500: #1BAFD6;
+    -bd-aqua-700: #0B7A99;
+
+    /* Mist - blue-tinted neutrals */
+    -bd-mist-0:   #FFFFFF;
+    -bd-mist-50:  #F5F9FC;
+    -bd-mist-100: #EAF1F7;
+    -bd-mist-200: #DAE5EE;
+    -bd-mist-300: #C3D3E0;
+    -bd-mist-400: #94A9BB;
+    -bd-mist-500: #64798C;
+    -bd-mist-600: #4A5E70;
+    -bd-mist-700: #364857;
+    -bd-mist-800: #233340;
+    -bd-mist-900: #15222D;
+
+    /* Feedback hues */
+    -bd-kelp-50:  #E6F6EE;  -bd-kelp-200:  #B5E0C7;  -bd-kelp-500:  #2E9E6B;  -bd-kelp-800:  #1F6B47;
+    -bd-sand-50:  #FFF6E0;  -bd-sand-200:  #F5DDA6;  -bd-sand-500:  #E9A23B;  -bd-sand-800:  #8A5A00;
+    -bd-reef-50:  #FDEBDD;  -bd-reef-200:  #F6CBA9;  -bd-reef-500:  #E8782E;  -bd-reef-800:  #A3470D;
+    -bd-coral-50: #FDEDEC;  -bd-coral-200: #F5C2C0;  -bd-coral-500: #D64545;  -bd-coral-800: #8E2724;
+
+    /* Alpha (JavaFX cannot apply opacity to a looked-up color) */
+    -bd-white-06: rgba(255, 255, 255, 0.06);
+    -bd-white-08: rgba(255, 255, 255, 0.08);
+    -bd-white-10: rgba(255, 255, 255, 0.10);
+    -bd-white-16: rgba(255, 255, 255, 0.16);
+    -bd-white-50: rgba(255, 255, 255, 0.50);
+    -bd-white-65: rgba(255, 255, 255, 0.65);
+    -bd-white-82: rgba(255, 255, 255, 0.82);
+    -bd-white-92: rgba(255, 255, 255, 0.92);
+    -bd-ocean-500-10: rgba(33, 131, 196, 0.10);
+    -bd-ocean-500-20: rgba(33, 131, 196, 0.20);
+    -bd-ocean-900-08: rgba(12, 54, 87, 0.08);
+    -bd-ocean-900-14: rgba(12, 54, 87, 0.14);
+    -bd-aqua-300-16: rgba(122, 215, 238, 0.16);
+
+    /* ===== 2. SEMANTIC ===== */
+    -bd-color-bg:              -bd-mist-50;
+    -bd-color-surface:         -bd-mist-0;
+    -bd-color-surface-subtle:  -bd-mist-50;
+    -bd-color-surface-tint:    -bd-ocean-50;
+    -bd-color-border:          -bd-mist-200;
+    -bd-color-border-subtle:   -bd-mist-100;
+    -bd-color-border-strong:   -bd-mist-300;
+
+    -bd-color-text:            -bd-mist-900;
+    -bd-color-text-muted:      -bd-mist-500;
+    -bd-color-text-inverse:    -bd-mist-0;
+
+    -bd-color-primary:         -bd-ocean-600;
+    -bd-color-primary-hover:   -bd-ocean-700;
+    -bd-color-primary-pressed: -bd-ocean-800;
+    -bd-color-primary-subtle:  -bd-ocean-100;
+    -bd-color-on-primary:      -bd-mist-0;
+    -bd-color-accent:          -bd-ocean-500;
+    -bd-color-highlight:       -bd-aqua-300;
+    -bd-color-focus:           -bd-ocean-500;
+    -bd-color-focus-faint:     -bd-ocean-500-20;
+
+    -bd-color-info-bg:         -bd-ocean-50;
+    -bd-color-info-border:     -bd-ocean-200;
+    -bd-color-info-text:       -bd-ocean-800;
+    -bd-color-success:         -bd-kelp-500;
+    -bd-color-success-bg:      -bd-kelp-50;
+    -bd-color-success-border:  -bd-kelp-200;
+    -bd-color-success-text:    -bd-kelp-800;
+    -bd-color-warning:         -bd-sand-500;
+    -bd-color-warning-bg:      -bd-sand-50;
+    -bd-color-warning-border:  -bd-sand-200;
+    -bd-color-warning-text:    -bd-sand-800;
+    -bd-color-danger:          -bd-coral-500;
+    -bd-color-danger-bg:       -bd-coral-50;
+    -bd-color-danger-border:   -bd-coral-200;
+    -bd-color-danger-text:     -bd-coral-800;
+    -bd-color-neutral-bg:      -bd-mist-100;
+    -bd-color-neutral-text:    -bd-mist-600;
+
+    /* ===== 3. COMPONENT ===== */
+    -bd-sidebar-bg-start:       -bd-ocean-800;
+    -bd-sidebar-bg-end:         -bd-ocean-950;
+    -bd-nav-fg:                 -bd-white-82;
+    -bd-nav-fg-selected:        -bd-color-text-inverse;
+    -bd-nav-hover-bg:           -bd-white-08;
+    -bd-nav-selected-bg:        -bd-white-16;
+    -bd-nav-indicator:          -bd-color-highlight;
+    -bd-hero-bg-start:          -bd-ocean-900;
+    -bd-hero-bg-end:            -bd-ocean-500;
+    -bd-wave-back:              -bd-white-06;
+    -bd-wave-mid:               -bd-aqua-300-16;
+    -bd-wave-front:             -bd-white-10;
+
+    -bd-button-bg:              -bd-color-surface;
+    -bd-button-fg:              -bd-color-primary;
+    -bd-button-border:          -bd-color-border;
+    -bd-button-hover-bg:        -bd-color-surface-tint;
+    -bd-button-pressed-bg:      -bd-color-primary-subtle;
+    -bd-button-primary-bg:      -bd-color-primary;
+    -bd-button-primary-hover-bg:   -bd-color-primary-hover;
+    -bd-button-primary-pressed-bg: -bd-color-primary-pressed;
+    -bd-button-primary-fg:      -bd-color-on-primary;
+    -bd-button-ghost-fg:        -bd-color-accent;
+    -bd-button-ghost-hover-bg:  -bd-ocean-500-10;
+
+    -bd-input-bg:               -bd-color-surface;
+    -bd-input-border:           -bd-color-border;
+    -bd-input-border-hover:     -bd-color-border-strong;
+    -bd-input-border-focus:     -bd-color-focus;
+
+    -bd-card-bg:                -bd-color-surface;
+    -bd-card-border:            -bd-color-border;
+    -bd-card-shadow:            -bd-ocean-900-08;
+
+    -bd-pill-bg:                -bd-color-primary-subtle;
+    -bd-pill-fg:                -bd-color-primary-pressed;
+
+    -bd-table-row-hover:        -bd-color-surface-tint;
+    -bd-table-row-selected:     -bd-color-primary-subtle;
+    -bd-table-row-divider:      -bd-color-border-subtle;
+
+    -bd-chart-series-1:         -bd-ocean-500;
+    -bd-chart-active:           -bd-color-warning;
+    -bd-chart-resolved:         -bd-color-success;
+    -bd-chart-grid:             -bd-color-border-subtle;
+
+    -bd-kpi-ocean:              -bd-color-accent;
+    -bd-kpi-amber:              -bd-color-warning;
+    -bd-kpi-red:                -bd-color-danger;
+    -bd-kpi-green:              -bd-color-success;
+
+    -bd-scrollbar-thumb:        -bd-mist-300;
+    -bd-scrollbar-thumb-hover:  -bd-mist-400;
+
+    /* ===== Base + modena bridge ===== */
     -fx-font-family: "System";
     -fx-font-size: 13px;
-    -fx-background-color: -bd-bg;
-    -fx-text-fill: -bd-ink;
-    -fx-accent: -bd-accent;
-    -fx-focus-color: -bd-accent;
-    -fx-faint-focus-color: rgba(27, 154, 170, 0.18);
+    -fx-background-color: -bd-color-bg;
+    -fx-text-fill: -bd-color-text;
+    -fx-accent: -bd-color-accent;
+    -fx-focus-color: -bd-color-focus;
+    -fx-faint-focus-color: -bd-color-focus-faint;
+    -fx-selection-bar: -bd-color-primary-subtle;
+    -fx-selection-bar-non-focused: -bd-color-border-subtle;
+    -fx-selection-bar-text: -bd-color-text;
 }
 
+/* ---------- Typography ---------- */
 .label {
-    -fx-text-fill: -bd-ink;
+    -fx-text-fill: -bd-color-text;
 }
 
 .page {
-    -fx-background-color: -bd-bg;
+    -fx-background-color: -bd-color-bg;
 }
 
 .page-title {
     -fx-font-size: 24px;
     -fx-font-weight: bold;
-    -fx-text-fill: -bd-primary;
+    -fx-text-fill: -bd-color-primary-pressed;
 }
 
 .page-subtitle, .muted {
-    -fx-text-fill: -bd-muted;
+    -fx-text-fill: -bd-color-text-muted;
 }
 
 .section-title {
     -fx-font-size: 14px;
     -fx-font-weight: bold;
-    -fx-text-fill: -bd-primary;
+    -fx-text-fill: -bd-color-primary;
 }
 
 .field-label {
     -fx-font-size: 12px;
     -fx-font-weight: bold;
-    -fx-text-fill: -bd-muted;
+    -fx-text-fill: -bd-color-text-muted;
+}
+
+.mono {
+    -fx-font-family: "Menlo", "Monospaced";
 }
 
 /* ---------- Cards ---------- */
 .card {
-    -fx-background-color: -bd-surface;
+    -fx-background-color: -bd-card-bg;
     -fx-background-radius: 12;
-    -fx-border-color: -bd-border;
+    -fx-border-color: -bd-card-border;
     -fx-border-radius: 12;
-    -fx-effect: dropshadow(gaussian, rgba(15, 76, 92, 0.08), 14, 0, 0, 3);
+    -fx-effect: dropshadow(gaussian, -bd-card-shadow, 14, 0, 0, 3);
 }
 
 .transparent-scroll, .transparent-scroll > .viewport {
@@ -77,11 +232,16 @@
 
 /* ---------- Inputs ---------- */
 .text-field, .password-field, .text-area, .combo-box-base {
-    -fx-background-color: -bd-surface;
+    -fx-background-color: -bd-input-bg;
     -fx-background-radius: 8;
-    -fx-border-color: -bd-border;
+    -fx-border-color: -bd-input-border;
     -fx-border-radius: 8;
     -fx-padding: 7 10 7 10;
+    -fx-prompt-text-fill: -bd-mist-400;
+}
+
+.text-field:hover, .password-field:hover, .text-area:hover, .combo-box-base:hover {
+    -fx-border-color: -bd-input-border-hover;
 }
 
 .text-area {
@@ -89,33 +249,55 @@
 }
 
 .text-area .content {
-    -fx-background-color: -bd-surface;
+    -fx-background-color: -bd-input-bg;
     -fx-background-radius: 8;
 }
 
 .text-field:focused, .password-field:focused, .text-area:focused, .combo-box-base:focused {
-    -fx-border-color: -bd-accent;
+    -fx-border-color: -bd-input-border-focus;
     -fx-border-width: 1.5;
+}
+
+.text-field:disabled, .password-field:disabled, .text-area:disabled, .combo-box-base:disabled {
+    -fx-opacity: 0.55;
 }
 
 .combo-box-base {
     -fx-padding: 2 4 2 4;
 }
 
+.combo-box-popup .list-view {
+    -fx-background-color: -bd-color-surface;
+    -fx-border-color: -bd-color-border;
+}
+
+.combo-box-popup .list-cell:hover {
+    -fx-background-color: -bd-color-surface-tint;
+}
+
+.combo-box-popup .list-cell:selected {
+    -fx-background-color: -bd-color-primary-subtle;
+    -fx-text-fill: -bd-color-text;
+}
+
 /* ---------- Buttons ---------- */
 .button, .toggle-button {
-    -fx-background-color: -bd-surface;
+    -fx-background-color: -bd-button-bg;
     -fx-background-radius: 8;
-    -fx-border-color: -bd-border;
+    -fx-border-color: -bd-button-border;
     -fx-border-radius: 8;
-    -fx-text-fill: -bd-primary;
+    -fx-text-fill: -bd-button-fg;
     -fx-font-weight: bold;
     -fx-padding: 8 16 8 16;
     -fx-cursor: hand;
 }
 
 .button:hover {
-    -fx-background-color: #EAF4F6;
+    -fx-background-color: -bd-button-hover-bg;
+}
+
+.button:pressed {
+    -fx-background-color: -bd-button-pressed-bg;
 }
 
 .button:disabled {
@@ -123,71 +305,80 @@
 }
 
 .btn-primary {
-    -fx-background-color: -bd-primary;
-    -fx-border-color: -bd-primary;
-    -fx-text-fill: white;
+    -fx-background-color: -bd-button-primary-bg;
+    -fx-border-color: -bd-button-primary-bg;
+    -fx-text-fill: -bd-button-primary-fg;
 }
 
 .btn-primary:hover {
-    -fx-background-color: -bd-accent;
-    -fx-border-color: -bd-accent;
+    -fx-background-color: -bd-button-primary-hover-bg;
+    -fx-border-color: -bd-button-primary-hover-bg;
+}
+
+.btn-primary:pressed {
+    -fx-background-color: -bd-button-primary-pressed-bg;
+    -fx-border-color: -bd-button-primary-pressed-bg;
 }
 
 .btn-ghost {
     -fx-background-color: transparent;
     -fx-border-color: transparent;
-    -fx-text-fill: -bd-accent;
+    -fx-text-fill: -bd-button-ghost-fg;
 }
 
 .btn-ghost:hover {
-    -fx-background-color: rgba(27, 154, 170, 0.10);
+    -fx-background-color: -bd-button-ghost-hover-bg;
+}
+
+.btn-ghost:pressed {
+    -fx-background-color: -bd-ocean-500-20;
 }
 
 /* ---------- App shell ---------- */
 .top-bar {
-    -fx-background-color: -bd-surface;
-    -fx-border-color: transparent transparent -bd-border transparent;
+    -fx-background-color: -bd-color-surface;
+    -fx-border-color: transparent transparent -bd-color-border transparent;
 }
 
 .top-bar-title {
     -fx-font-size: 16px;
     -fx-font-weight: bold;
-    -fx-text-fill: -bd-primary;
+    -fx-text-fill: -bd-color-primary-pressed;
 }
 
 .user-pill {
-    -fx-background-color: #E3F3F6;
+    -fx-background-color: -bd-pill-bg;
     -fx-background-radius: 999;
     -fx-padding: 5 12 5 12;
-    -fx-text-fill: -bd-primary;
+    -fx-text-fill: -bd-pill-fg;
     -fx-font-weight: bold;
 }
 
 .sidebar {
-    -fx-background-color: linear-gradient(to bottom, #0F4C5C, #0A3642);
+    -fx-background-color: linear-gradient(to bottom, -bd-sidebar-bg-start, -bd-sidebar-bg-end);
 }
 
 .brand {
     -fx-font-size: 20px;
     -fx-font-weight: bold;
-    -fx-text-fill: white;
+    -fx-text-fill: -bd-color-text-inverse;
 }
 
 .brand-tagline {
     -fx-font-size: 11px;
-    -fx-text-fill: rgba(255, 255, 255, 0.65);
+    -fx-text-fill: -bd-white-65;
 }
 
 .nav-section {
     -fx-font-size: 10px;
     -fx-font-weight: bold;
-    -fx-text-fill: rgba(255, 255, 255, 0.5);
+    -fx-text-fill: -bd-white-50;
 }
 
 .nav-button {
     -fx-background-color: transparent;
     -fx-border-color: transparent;
-    -fx-text-fill: rgba(255, 255, 255, 0.82);
+    -fx-text-fill: -bd-nav-fg;
     -fx-font-weight: normal;
     -fx-font-size: 13px;
     -fx-alignment: center-left;
@@ -196,44 +387,50 @@
 }
 
 .nav-button:hover {
-    -fx-background-color: rgba(255, 255, 255, 0.08);
+    -fx-background-color: -bd-nav-hover-bg;
 }
 
 .nav-button:selected {
-    -fx-background-color: rgba(255, 255, 255, 0.16);
-    -fx-text-fill: white;
+    -fx-background-color: -bd-nav-selected-bg;
+    -fx-text-fill: -bd-nav-fg-selected;
     -fx-font-weight: bold;
-    -fx-border-color: transparent transparent transparent #5FD3DF;
+    -fx-border-color: transparent transparent transparent -bd-nav-indicator;
     -fx-border-width: 0 0 0 3;
 }
 
 /* ---------- Login ---------- */
 .login-hero {
-    -fx-background-color: linear-gradient(to bottom right, #0F4C5C, #1B9AAA);
+    -fx-background-color: linear-gradient(to bottom right, -bd-hero-bg-start, -bd-hero-bg-end);
 }
+
+/* Animated waves (see Motion.waves) */
+.wave       { -fx-stroke: transparent; }
+.wave-back  { -fx-fill: -bd-wave-back; }
+.wave-mid   { -fx-fill: -bd-wave-mid; }
+.wave-front { -fx-fill: -bd-wave-front; }
 
 .hero-title {
     -fx-font-size: 40px;
     -fx-font-weight: bold;
-    -fx-text-fill: white;
+    -fx-text-fill: -bd-color-text-inverse;
 }
 
 .hero-text {
     -fx-font-size: 15px;
-    -fx-text-fill: rgba(255, 255, 255, 0.88);
+    -fx-text-fill: -bd-white-92;
 }
 
 .hero-point {
     -fx-font-size: 13px;
-    -fx-text-fill: rgba(255, 255, 255, 0.92);
+    -fx-text-fill: -bd-white-92;
 }
 
 .demo-hint {
-    -fx-background-color: #F4F8F9;
+    -fx-background-color: -bd-color-surface-tint;
     -fx-background-radius: 8;
     -fx-padding: 10;
     -fx-font-size: 11px;
-    -fx-text-fill: -bd-muted;
+    -fx-text-fill: -bd-color-text-muted;
 }
 
 /* ---------- Banners ---------- */
@@ -243,28 +440,15 @@
     -fx-padding: 12 14 12 14;
 }
 
-.banner-info {
-    -fx-background-color: #E6F4F7;
-    -fx-border-color: #BFE3EA;
-}
+.banner-info    { -fx-background-color: -bd-color-info-bg;    -fx-border-color: -bd-color-info-border; }
+.banner-success { -fx-background-color: -bd-color-success-bg; -fx-border-color: -bd-color-success-border; }
+.banner-warning { -fx-background-color: -bd-color-warning-bg; -fx-border-color: -bd-color-warning-border; }
+.banner-danger  { -fx-background-color: -bd-color-danger-bg;  -fx-border-color: -bd-color-danger-border; }
 
-.banner-success {
-    -fx-background-color: #E5F5EC;
-    -fx-border-color: #B5E0C7;
-}
-
-.banner-success .label {
-    -fx-text-fill: #1F6B47;
-}
-
-.banner-danger {
-    -fx-background-color: #FDECEC;
-    -fx-border-color: #F5C2C0;
-}
-
-.banner-danger .label {
-    -fx-text-fill: #8E2B28;
-}
+.banner-info .label    { -fx-text-fill: -bd-color-info-text; }
+.banner-success .label { -fx-text-fill: -bd-color-success-text; }
+.banner-warning .label { -fx-text-fill: -bd-color-warning-text; }
+.banner-danger .label  { -fx-text-fill: -bd-color-danger-text; }
 
 /* ---------- Badges ---------- */
 .badge {
@@ -274,59 +458,63 @@
     -fx-font-weight: bold;
 }
 
-.severity-low      { -fx-background-color: #E5F5EC; -fx-text-fill: #1F6B47; }
-.severity-medium   { -fx-background-color: #FFF4DE; -fx-text-fill: #8A5A00; }
-.severity-high     { -fx-background-color: #FDE8D7; -fx-text-fill: #A3470D; }
-.severity-critical { -fx-background-color: #FDECEC; -fx-text-fill: #A52A26; }
+.severity-low      { -fx-background-color: -bd-color-success-bg; -fx-text-fill: -bd-color-success-text; }
+.severity-medium   { -fx-background-color: -bd-color-warning-bg; -fx-text-fill: -bd-color-warning-text; }
+.severity-high     { -fx-background-color: -bd-reef-50;          -fx-text-fill: -bd-reef-800; }
+.severity-critical { -fx-background-color: -bd-color-danger-bg;  -fx-text-fill: -bd-color-danger-text; }
 
-.status-submitted    { -fx-background-color: #EEF1F4; -fx-text-fill: #46525C; }
-.status-under-review { -fx-background-color: #E6F0FB; -fx-text-fill: #1E5A9C; }
-.status-dispatched   { -fx-background-color: #FFF4DE; -fx-text-fill: #8A5A00; }
-.status-resolved     { -fx-background-color: #E5F5EC; -fx-text-fill: #1F6B47; }
+.status-submitted    { -fx-background-color: -bd-color-neutral-bg;     -fx-text-fill: -bd-color-neutral-text; }
+.status-under-review { -fx-background-color: -bd-color-primary-subtle; -fx-text-fill: -bd-color-primary-pressed; }
+.status-dispatched   { -fx-background-color: -bd-color-warning-bg;     -fx-text-fill: -bd-color-warning-text; }
+.status-resolved     { -fx-background-color: -bd-color-success-bg;     -fx-text-fill: -bd-color-success-text; }
 
 /* ---------- Tables ---------- */
 .table-view {
-    -fx-background-color: -bd-surface;
+    -fx-background-color: -bd-card-bg;
     -fx-background-radius: 12;
-    -fx-border-color: -bd-border;
+    -fx-border-color: -bd-card-border;
     -fx-border-radius: 12;
     -fx-padding: 4;
 }
 
 .table-view .column-header-background {
-    -fx-background-color: -bd-surface;
+    -fx-background-color: -bd-color-surface;
     -fx-background-radius: 12 12 0 0;
 }
 
 .table-view .column-header, .table-view .filler {
     -fx-background-color: transparent;
-    -fx-border-color: transparent transparent -bd-border transparent;
+    -fx-border-color: transparent transparent -bd-color-border transparent;
     -fx-size: 38px;
 }
 
 .table-view .column-header .label {
-    -fx-text-fill: -bd-muted;
+    -fx-text-fill: -bd-color-text-muted;
     -fx-font-weight: bold;
     -fx-font-size: 11px;
     -fx-alignment: center-left;
 }
 
+.table-view .placeholder .label {
+    -fx-text-fill: -bd-color-text-muted;
+}
+
 .table-row-cell {
-    -fx-background-color: -bd-surface;
-    -fx-border-color: transparent transparent #EEF3F5 transparent;
+    -fx-background-color: -bd-color-surface;
+    -fx-border-color: transparent transparent -bd-table-row-divider transparent;
     -fx-cell-size: 40px;
 }
 
 .table-row-cell:hover {
-    -fx-background-color: #F2F9FA;
+    -fx-background-color: -bd-table-row-hover;
 }
 
 .table-row-cell:selected {
-    -fx-background-color: #DDF0F3;
+    -fx-background-color: -bd-table-row-selected;
 }
 
 .table-row-cell:selected .table-cell {
-    -fx-text-fill: -bd-ink;
+    -fx-text-fill: -bd-color-text;
 }
 
 .table-cell {
@@ -335,19 +523,15 @@
     -fx-border-color: transparent;
 }
 
-.mono {
-    -fx-font-family: "Menlo", "Monospaced";
-}
-
 /* ---------- Report details ---------- */
 .detail-title {
     -fx-font-size: 18px;
     -fx-font-weight: bold;
-    -fx-text-fill: -bd-primary;
+    -fx-text-fill: -bd-color-primary-pressed;
 }
 
 .detail-key {
-    -fx-text-fill: -bd-muted;
+    -fx-text-fill: -bd-color-text-muted;
     -fx-font-size: 12px;
 }
 
@@ -356,15 +540,15 @@
 }
 
 .thumbnail {
-    -fx-background-color: #F4F8F9;
+    -fx-background-color: -bd-color-surface-tint;
     -fx-background-radius: 10;
-    -fx-border-color: -bd-border;
+    -fx-border-color: -bd-color-border;
     -fx-border-radius: 10;
     -fx-padding: 8;
 }
 
 .empty-state {
-    -fx-text-fill: -bd-muted;
+    -fx-text-fill: -bd-color-text-muted;
     -fx-font-size: 13px;
 }
 
@@ -376,19 +560,19 @@
 .kpi-value {
     -fx-font-size: 30px;
     -fx-font-weight: bold;
-    -fx-text-fill: -bd-primary;
+    -fx-text-fill: -bd-color-primary-pressed;
 }
 
 .kpi-label {
     -fx-font-size: 12px;
     -fx-font-weight: bold;
-    -fx-text-fill: -bd-muted;
+    -fx-text-fill: -bd-color-text-muted;
 }
 
-.kpi-accent-teal     { -fx-border-color: -bd-border -bd-border -bd-border #1B9AAA; -fx-border-width: 1 1 1 4; }
-.kpi-accent-amber    { -fx-border-color: -bd-border -bd-border -bd-border #F0AD4E; -fx-border-width: 1 1 1 4; }
-.kpi-accent-red      { -fx-border-color: -bd-border -bd-border -bd-border #D9534F; -fx-border-width: 1 1 1 4; }
-.kpi-accent-green    { -fx-border-color: -bd-border -bd-border -bd-border #2E9E6B; -fx-border-width: 1 1 1 4; }
+.kpi-accent-ocean { -fx-border-color: -bd-card-border -bd-card-border -bd-card-border -bd-kpi-ocean; -fx-border-width: 1 1 1 4; }
+.kpi-accent-amber { -fx-border-color: -bd-card-border -bd-card-border -bd-card-border -bd-kpi-amber; -fx-border-width: 1 1 1 4; }
+.kpi-accent-red   { -fx-border-color: -bd-card-border -bd-card-border -bd-card-border -bd-kpi-red;   -fx-border-width: 1 1 1 4; }
+.kpi-accent-green { -fx-border-color: -bd-card-border -bd-card-border -bd-card-border -bd-kpi-green; -fx-border-width: 1 1 1 4; }
 
 .chart {
     -fx-padding: 8;
@@ -397,7 +581,7 @@
 .chart-title {
     -fx-font-size: 14px;
     -fx-font-weight: bold;
-    -fx-text-fill: -bd-primary;
+    -fx-text-fill: -bd-color-primary;
 }
 
 .chart-plot-background {
@@ -409,16 +593,24 @@
 }
 
 .chart-horizontal-grid-lines {
-    -fx-stroke: #EEF3F5;
+    -fx-stroke: -bd-chart-grid;
+}
+
+.axis {
+    -fx-tick-label-fill: -bd-color-text-muted;
+}
+
+.axis-label {
+    -fx-text-fill: -bd-color-text-muted;
 }
 
 .default-color0.chart-bar {
-    -fx-bar-fill: #1B9AAA;
+    -fx-bar-fill: -bd-chart-series-1;
     -fx-background-radius: 6 6 0 0;
 }
 
-.default-color0.chart-pie { -fx-pie-color: #F0AD4E; }
-.default-color1.chart-pie { -fx-pie-color: #2E9E6B; }
+.default-color0.chart-pie { -fx-pie-color: -bd-chart-active; }
+.default-color1.chart-pie { -fx-pie-color: -bd-chart-resolved; }
 
 .chart-legend {
     -fx-background-color: transparent;
@@ -428,24 +620,29 @@
 .hotline-name {
     -fx-font-size: 14px;
     -fx-font-weight: bold;
-    -fx-text-fill: -bd-ink;
+    -fx-text-fill: -bd-color-text;
 }
 
 .hotline-number {
     -fx-font-size: 22px;
     -fx-font-weight: bold;
-    -fx-text-fill: -bd-primary;
+    -fx-text-fill: -bd-color-primary;
 }
 
 .hyperlink {
-    -fx-text-fill: -bd-accent;
+    -fx-text-fill: -bd-color-accent;
     -fx-border-color: transparent;
     -fx-padding: 0;
 }
 
-/* ---------- Dialogs & split panes ---------- */
+.hyperlink:hover {
+    -fx-text-fill: -bd-color-primary-hover;
+    -fx-underline: true;
+}
+
+/* ---------- Dialogs, split panes, scroll bars ---------- */
 .dialog-pane {
-    -fx-background-color: -bd-surface;
+    -fx-background-color: -bd-color-surface;
 }
 
 .split-pane {
@@ -463,6 +660,10 @@
 }
 
 .scroll-bar .thumb {
-    -fx-background-color: #C9D7DC;
+    -fx-background-color: -bd-scrollbar-thumb;
     -fx-background-radius: 999;
+}
+
+.scroll-bar .thumb:hover {
+    -fx-background-color: -bd-scrollbar-thumb-hover;
 }

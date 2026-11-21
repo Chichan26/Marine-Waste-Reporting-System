@@ -33,6 +33,7 @@ public final class HotlinesView extends ScrollPane {
             VBox card = ViewSupport.card(name, number, source);
             card.setSpacing(8);
             card.setPrefWidth(280);
+            Motion.hoverLift(card); // [F26-B03] Gentle lift on hover
             grid.getChildren().add(card);
         }
         return grid;

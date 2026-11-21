@@ -67,7 +67,9 @@ final class ViewSupport {
 
     // [F20-B04] Filled call-to-action button
     static Button primaryButton(String text) {
-        return styled(new Button(text), "btn-primary");
+        Button button = styled(new Button(text), "btn-primary");
+        Motion.pressable(button); // [F20-B04] Press-down feedback
+        return button;
     }
 
     // [F20-B04] Text-only button for low-emphasis actions
@@ -81,6 +83,7 @@ final class ViewSupport {
         message.setWrapText(true);
         HBox box = new HBox(message);
         box.getStyleClass().addAll("banner", "banner-" + kind);
+        Motion.enter(box); // [F20-B04] Messages fade in instead of popping
         return box;
     }
 

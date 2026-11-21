@@ -137,7 +137,7 @@ public final class Main extends Application {
             ToggleButton button = ViewSupport.styled(new ToggleButton(item.label()), "nav-button");
             button.setMaxWidth(Double.MAX_VALUE);
             button.setToggleGroup(group);
-            button.setOnAction(event -> root.setCenter(item.view()));
+            button.setOnAction(event -> showScreen(item.view()));
             nav.getChildren().add(button);
         }
         group.selectedToggleProperty().addListener((obs, old, now) -> {
@@ -147,12 +147,21 @@ public final class Main extends Application {
         });
         if (!group.getToggles().isEmpty()) {
             group.getToggles().get(0).setSelected(true);
-            root.setCenter(items.get(0).view());
+            showScreen(items.get(0).view());
         }
         nav.setPadding(new Insets(24, 14, 24, 14));
         nav.setPrefWidth(220);
         nav.getStyleClass().add("sidebar");
         return nav;
+    }
+
+    // [F27-B10] Swap the centre screen with a short fade-and-rise (skipped if already shown)
+    private void showScreen(Node view) {
+        if (root.getCenter() == view) {
+            return;
+        }
+        root.setCenter(view);
+        Motion.enter(view);
     }
 
     // [F27-B11] Java entry point used by Maven
