@@ -48,10 +48,10 @@ BantayDagat aims to provide a centralized and structured way to document marine 
 
 | Team Member | Role | Responsibilities |
 |---|---|---|
-| [Christian Rocero] | Lead Programmer | Application architecture, core functionality, and system integration |
-| [Kent Jasper Dagohoy] | UI/UX Designer | Interface design, layouts, and visual consistency |
-| [Mon Raven Lapso] | Documentation | Project documentation, technical writing, and presentation materials |
-| [Earl Yancy Navarro] | Tester / Quality Assurance | Testing functionality, identifying bugs, and verifying system behavior |
+| Christian Rocero | Lead Programmer | Application architecture, core functionality, and system integration |
+| Kent Jasper Dagohoy | UI/UX Designer | Interface design, layouts, and visual consistency |
+| Mon Raven Lapso | Documentation | Project documentation, technical writing, and presentation materials |
+| Earl Yancy Navarro | Tester / Quality Assurance | Testing functionality, identifying bugs, and verifying system behavior |
 
 
 ## Object-Oriented Programming Concepts Demonstrated
@@ -75,14 +75,14 @@ BantayDagat aims to provide a centralized and structured way to document marine 
 2. Open a terminal in the project directory containing `pom.xml`.
 3. Verify Java and Maven installations:
 
-   ```bash
+   ```powershell
    java -version
    mvn -version
    ```
 
 4. Run the application:
 
-   ```bash
+   ```powershell
    mvn clean javafx:run
    ```
 
