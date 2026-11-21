@@ -3,61 +3,130 @@
 package ph.bantaydagat;
 
 import java.util.List; // [F25-B01] Snapshot of all reports
-import javafx.geometry.Insets; // [F25-B01] Dashboard spacing
 import javafx.scene.chart.BarChart; // [F25-B01] Counts per category
 import javafx.scene.chart.CategoryAxis; // [F25-B01] Waste categories along the bottom
 import javafx.scene.chart.NumberAxis; // [F25-B01] Count axis
 import javafx.scene.chart.PieChart; // [F25-B01] Active versus resolved
 import javafx.scene.chart.XYChart; // [F25-B01] Bar data series
-import javafx.scene.layout.HBox; // [F25-B01] Side-by-side charts
-import javafx.scene.layout.Priority; // [F25-B01] Resize charts with the window
+import javafx.scene.control.Label; // [F25-B01] KPI values
+import javafx.scene.control.ScrollPane; // [F25-B01] Small windows
+import javafx.scene.layout.HBox; // [F25-B01] Side-by-side cards
+import javafx.scene.layout.Priority; // [F25-B01] Resize with the window
 import javafx.scene.layout.VBox; // [F25-B01] Dashboard layout
 
-public final class DashboardView extends VBox {
-    // [F25-B02] Read-only manager and reusable charts
+public final class DashboardView extends ScrollPane {
+    // [F25-B02] Read-only manager, KPI labels and reusable charts
     private final IncidentManager manager;
+    private final Label total = kpiValue();
+    private final Label active = kpiValue();
+    private final Label critical = kpiValue();
+    private final Label resolvedRate = kpiValue();
+    private final long[] kpiShown = new long[4]; // [F25-B02] Values currently on screen (count-up start)
+    private final long[] kpiTarget = new long[4]; // [F25-B02] Latest values (count-up end)
+    private boolean noReports; // [F25-B02] Resolution rate shows a dash when there is no data
     private final PieChart statusChart = new PieChart();
     private final BarChart<String, Number> categoryChart = new BarChart<>(new CategoryAxis(), new NumberAxis());
 
-    // [F25-B03] Build the dashboard with two resizable charts
+    // [F25-B03] KPI row above two chart cards
     public DashboardView(IncidentManager manager) {
         this.manager = manager;
-        setSpacing(12);
-        setPadding(new Insets(20));
         configureCharts();
-        HBox charts = new HBox(12, statusChart, categoryChart);
-        HBox.setHgrow(statusChart, Priority.ALWAYS);
-        HBox.setHgrow(categoryChart, Priority.ALWAYS);
-        VBox.setVgrow(charts, Priority.ALWAYS);
-        getChildren().addAll(ViewSupport.title("Incident dashboard"), charts);
+        HBox kpis = new HBox(16, kpiCard("TOTAL REPORTS", total, "kpi-accent-ocean"),
+                kpiCard("ACTIVE INCIDENTS", active, "kpi-accent-amber"),
+                kpiCard("CRITICAL OPEN", critical, "kpi-accent-red"),
+                kpiCard("RESOLUTION RATE", resolvedRate, "kpi-accent-green"));
+        VBox pieCard = ViewSupport.card(statusChart);
+        VBox barCard = ViewSupport.card(categoryChart);
+        HBox charts = new HBox(16, pieCard, barCard);
+        HBox.setHgrow(pieCard, Priority.ALWAYS);
+        HBox.setHgrow(barCard, Priority.ALWAYS);
+        pieCard.setPrefWidth(380);
+        barCard.setPrefWidth(560);
+        setContent(ViewSupport.page(ViewSupport.header("Incident dashboard",
+                "A live overview of marine waste reports across all areas."), kpis, charts));
+        setFitToWidth(true);
+        getStyleClass().add("transparent-scroll");
         refresh();
+        // [F25-B03] Replay the KPI count-up every time the dashboard is opened
+        sceneProperty().addListener((obs, old, scene) -> {
+            if (scene != null) {
+                animateKpis(true);
+            }
+        });
     }
 
     // [F25-B04] Label charts and disable animation during updates
     private void configureCharts() {
         statusChart.setTitle("Active vs. resolved");
         statusChart.setAnimated(false);
+        statusChart.setLabelsVisible(false);
         statusChart.setMinWidth(250);
+        statusChart.setPrefHeight(340);
         categoryChart.setTitle("Reports by waste category");
         categoryChart.getYAxis().setLabel("Reports");
         categoryChart.getXAxis().setTickLabelRotation(-32);
         categoryChart.setAnimated(false);
         categoryChart.setLegendVisible(false);
-        categoryChart.setMinWidth(410);
+        categoryChart.setMinWidth(380);
+        categoryChart.setPrefHeight(340);
     }
 
-    // [F25-B05] Refresh both charts from the same snapshot
+    // [F25-B04] One summary tile
+    private VBox kpiCard(String label, Label value, String accent) {
+        VBox card = ViewSupport.card(ViewSupport.styled(new Label(label), "kpi-label"), value);
+        card.setSpacing(6);
+        card.getStyleClass().addAll("kpi-card", accent);
+        Motion.hoverLift(card); // [F25-B04] Gentle lift on hover
+        card.setMaxWidth(Double.MAX_VALUE);
+        HBox.setHgrow(card, Priority.ALWAYS);
+        return card;
+    }
+
+    // [F25-B04] Large number label
+    private static Label kpiValue() {
+        return ViewSupport.styled(new Label("0"), "kpi-value");
+    }
+
+    // [F25-B05] Refresh KPIs and charts from the same snapshot
     public void refresh() {
         List<Report> reports = manager.getReports();
+        updateKpis(reports);
         updateStatusChart(reports);
         updateCategoryChart(reports); // [F25-B05] Apply the same report data to the bar chart
+    }
+
+    // [F25-B05] Headline numbers
+    private void updateKpis(List<Report> reports) {
+        long resolved = reports.stream().filter(report -> report.getStatus() == Status.RESOLVED).count();
+        long criticalOpen = reports.stream().filter(report -> report.getStatus() != Status.RESOLVED
+                && report.getSeverityLevel() == Severity.CRITICAL).count();
+        kpiTarget[0] = reports.size();
+        kpiTarget[1] = reports.size() - resolved;
+        kpiTarget[2] = criticalOpen;
+        kpiTarget[3] = reports.isEmpty() ? 0 : Math.round(100.0 * resolved / reports.size());
+        noReports = reports.isEmpty();
+        animateKpis(false);
+    }
+
+    // [F25-B05] Count each KPI up to its target, from zero or from the value already shown
+    private void animateKpis(boolean fromZero) {
+        Label[] labels = {total, active, critical, resolvedRate};
+        for (int i = 0; i < labels.length; i++) {
+            long from = fromZero ? 0 : kpiShown[i];
+            kpiShown[i] = kpiTarget[i];
+            if (i == 3 && noReports) {
+                Motion.countUp(labels[i], 0, 0, value -> "—");
+            } else {
+                Motion.countUp(labels[i], from, kpiTarget[i], i == 3 ? value -> value + "%" : String::valueOf);
+            }
+        }
     }
 
     // [F25-B06] Count all unresolved statuses as active
     private void updateStatusChart(List<Report> reports) {
         long resolved = reports.stream().filter(report -> report.getStatus() == Status.RESOLVED).count();
-        long active = reports.size() - resolved;
-        statusChart.getData().setAll(new PieChart.Data("Active (" + active + ")", active),
+        long open = reports.size() - resolved;
+        statusChart.getData().setAll(new PieChart.Data("Active (" + open + ")", open),
                 new PieChart.Data("Resolved (" + resolved + ")", resolved));
     }
 
@@ -72,4 +141,3 @@ public final class DashboardView extends VBox {
         categoryChart.getData().add(series);
     }
 }
-
