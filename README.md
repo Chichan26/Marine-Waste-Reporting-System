@@ -50,11 +50,11 @@ BantayDagat aims to provide a centralized and structured way to document marine 
 |---|---|---|
 | Christian Rocero | Lead Programmer | Application architecture, core functionality, and system integration |
 | Kent Jasper Dagohoy | UI/UX Designer | Interface design, layouts, and visual consistency |
-| Mon Raven Lapso | Documentation | Project documentation, technical writing, and presentation materials |
+| Mon Raven Lapso | Documentation | Project documentation, technical writing, and code review |
 | Earl Yancy Navarro | Tester / Quality Assurance | Testing functionality, identifying bugs, and verifying system behavior |
 
 
-## Object-Oriented Programming Concepts Demonstrated
+## Object-Oriented Programming (OOP) Concepts
 
 - **Encapsulation:** Classes such as `User`, `Report`, and `IncidentManager` manage their internal data and expose controlled operations.
 - **Inheritance:** `AdminUser` and `CitizenUser` inherit from the abstract `User` class. Similarly, `TextReport` and `MediaReport` inherit from `Report`.
@@ -95,7 +95,7 @@ The application will launch through JavaFX. On its first run, demonstration acco
 | Administrator | `admin` | `change-admin-password` |
 | Citizen | `citizen` | `change-citizen-password` |
 
-## 10. Sample Screenshots
+## Sample Screenshots
 
 ### Login Page
 ![Login Screen](screenshots/LoginPage.png)
