@@ -73,7 +73,7 @@ JavaFX CSS has no `var()`. Instead, **looked-up colors** declared on `.root` are
 |-------|--------|
 | Spacing (4-px grid) | 4 · 8 · 12 · 16 · 20 · 24 · 32 |
 | Radius | sm 6 (chart bars) · md 8 (buttons, inputs, nav) · lg 10 (banners, thumbnails) · xl 12 (cards, tables) · full 999 (pills, badges) |
-| Type | 2xs 10 nav section · xs 11 badges, table headers · sm 12 labels · **base 13 body** · md 14 section/chart titles · lg 16 top bar · xl 18 detail title · 2xl 22 hotline number · 3xl 24 page title · 4xl 30 KPI value · 5xl 40 hero |
+| Type | xs 11 nav section, step labels, hero badge · sm 12 badges, field labels, table headers, captions · **base 14 body** · md 15 prose descriptions, empty-state title · lg 16 section/chart titles, top bar, hero text · xl 18 brand, detail title, stat chip · 2xl 22 hotline number · 3xl 24 page title · 4xl 30 KPI value · 5xl 40 hero *(expressed in `em` relative to `.root`)* |
 | Elevation | `card`: dropshadow(gaussian, ocean-900 @ 8 %, 14, 0, 0, 3) |
 
 ## 4. Component specs
@@ -149,7 +149,7 @@ Wave colors are component tokens: `-bd-wave-back` (white @ 6 %), `-bd-wave-mid` 
 
 1. **Never put hex or rgba below the `.root` block.** Add a primitive, then alias it.
 2. Component rules should reference **semantic or component** tokens, not primitives (alpha primitives such as `-bd-white-16` on the dark sidebar are the exception).
-3. To re-theme (for example dark mode), override **only the semantic layer** on `.root.dark`. Components follow automatically.
+3. **Dark mode (`.root.dark`)** overrides only the semantic layer using deep `abyss` surfaces (`#0D1824` – `#1F374F`) and dark-safe feedback `900`/`200` pairs. Toggle it at runtime via `ViewSupport.themeToggle(darkMode)`.
 4. Update `design-tokens.json` and `styles.css` together.
 
 ### Quick check

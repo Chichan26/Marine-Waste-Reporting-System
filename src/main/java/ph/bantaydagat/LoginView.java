@@ -5,6 +5,7 @@ package ph.bantaydagat;
 import java.io.IOException; // [F21-B01] Handle failed registration saves
 import java.util.List; // [F21-B01] Hero lines to stagger
 import java.util.function.Consumer; // [F21-B01] Send the account to Main
+import javafx.beans.property.BooleanProperty; // [F21-B01] Shared dark mode toggle
 import javafx.geometry.Insets; // [F21-B01] Panel padding
 import javafx.geometry.Pos; // [F21-B01] Center the sign-in card
 import javafx.scene.control.Button; // [F21-B01] Session actions
@@ -25,12 +26,18 @@ public final class LoginView extends HBox {
     private VBox card; // [F21-B02] Kept so a failed sign-in can shake it
 
     // [F21-B03] Ocean hero on the left, sign-in card on the right
-    public LoginView(AuthService auth, Consumer<User> signedIn, Runnable anonymous) {
+    public LoginView(AuthService auth, BooleanProperty darkMode, Consumer<User> signedIn, Runnable anonymous) {
         StackPane hero = createHero();
         card = createCard(auth, signedIn, anonymous);
         Motion.enter(card, Motion.STAGGER.multiply(2)); // [F21-B03] Card rises in after the hero copy
-        StackPane formSide = new StackPane(card);
+
+        Button theme = ViewSupport.themeToggle(darkMode);
+        StackPane.setAlignment(theme, Pos.TOP_RIGHT);
+        StackPane.setMargin(theme, new Insets(18, 22, 0, 0));
+
+        StackPane formSide = new StackPane(card, theme);
         formSide.setPadding(new Insets(32));
+        formSide.getStyleClass().add("page");
         HBox.setHgrow(hero, Priority.ALWAYS);
         HBox.setHgrow(formSide, Priority.ALWAYS);
         hero.setPrefWidth(520);
@@ -40,24 +47,42 @@ public final class LoginView extends HBox {
 
     // [F21-B04] Branding and what the system does
     private StackPane createHero() {
+        StackPane mark = ViewSupport.styled(new StackPane(Icons.of(Icons.WAVE_EMBLEM, 28, "icon-brand")),
+                "brand-mark");
+        Label badge = ViewSupport.styled(new Label("MARINE WASTE REPORTING SYSTEM"), "hero-badge");
+        HBox topRow = new HBox(12, mark, badge);
+        topRow.setAlignment(Pos.CENTER_LEFT);
+
         Label title = ViewSupport.styled(new Label("BantayDagat"), "hero-title");
         Label text = ViewSupport.styled(new Label(
-                "Report marine waste, track cleanups and keep our coasts safe."), "hero-text");
+                "Report marine waste, coordinate coastal cleanups and keep our seas safe."), "hero-text");
         text.setWrapText(true);
-        VBox points = new VBox(10,
-                ViewSupport.styled(new Label("✓  Report plastic, oil, fishing gear and more"), "hero-point"),
-                ViewSupport.styled(new Label("✓  Attach photos or videos as evidence"), "hero-point"),
-                ViewSupport.styled(new Label("✓  Follow every report until it is resolved"), "hero-point"));
-        VBox copy = new VBox(18, title, text, points);
+        text.setMaxWidth(420);
+
+        VBox points = new VBox(12,
+                heroPoint("Report plastic, oil spills, fishing gear and more"),
+                heroPoint("Attach photos or videos as verifiable evidence"),
+                heroPoint("Track every incident from dispatch to resolution"));
+
+        VBox copy = new VBox(18, topRow, title, text, points);
         copy.setAlignment(Pos.CENTER_LEFT);
-        copy.setPadding(new Insets(48));
-        Motion.stagger(List.of(title, text, points)); // [F21-B04] Headline, text, then points
+        copy.setPadding(new Insets(52));
+        Motion.stagger(List.of(topRow, title, text, points)); // [F21-B04] Staggered hero entrance
         StackPane hero = new StackPane(Motion.waves(), copy); // [F21-B04] Drifting waves behind the copy
         hero.getStyleClass().add("login-hero");
         return hero;
     }
 
-    // [F21-B04] Sign-in card with fields, actions and demo hint
+    private HBox heroPoint(String text) {
+        StackPane check = ViewSupport.styled(new StackPane(Icons.of(Icons.CHECK, 12, "icon-brand")), "hero-check");
+        Label label = ViewSupport.styled(new Label(text), "hero-point");
+        label.setWrapText(true);
+        HBox row = new HBox(12, check, label);
+        row.setAlignment(Pos.CENTER_LEFT);
+        return row;
+    }
+
+    // [F21-B04] Sign-in card with fields, actions and quick-fill demo hint
     private VBox createCard(AuthService auth, Consumer<User> signedIn, Runnable anonymous) {
         username.setPromptText("Enter your username");
         password.setPromptText("Enter your password");
@@ -67,13 +92,36 @@ public final class LoginView extends HBox {
                 ViewSupport.field("Password", password),
                 createActions(auth, signedIn, anonymous),
                 feedback,
-                ViewSupport.styled(new Label("Demo accounts\nadmin / change-admin-password\n"
-                        + "citizen / change-citizen-password"), "demo-hint"));
+                createDemoHint());
+        card.getStyleClass().add("card-elevated");
         card.setSpacing(16);
         card.setPadding(new Insets(32));
-        card.setMaxWidth(400);
+        card.setMaxWidth(420);
         card.setMaxHeight(VBox.USE_PREF_SIZE);
         return card;
+    }
+
+    // [F21-B04] One-click credential chips for demo accounts
+    private VBox createDemoHint() {
+        Label title = ViewSupport.styled(new Label("QUICK DEMO FILL"), "demo-hint-title");
+        Button fillAdmin = demoChip("Admin", "admin", "change-admin-password");
+        Button fillCitizen = demoChip("Citizen", "citizen", "change-citizen-password");
+        HBox chips = new HBox(8, fillAdmin, fillCitizen);
+        Label note = ViewSupport.styled(
+                new Label("admin / change-admin-password  ·  citizen / change-citizen-password"), "muted");
+        note.setWrapText(true);
+        VBox box = ViewSupport.styled(new VBox(8, title, chips, note), "demo-hint");
+        return box;
+    }
+
+    private Button demoChip(String label, String user, String pass) {
+        Button chip = ViewSupport.styled(new Button(label), "demo-chip");
+        chip.setOnAction(event -> {
+            username.setText(user);
+            password.setText(pass);
+            feedback.getChildren().clear();
+        });
+        return chip;
     }
 
     // [F21-B05] Connect login, registration and guest mode

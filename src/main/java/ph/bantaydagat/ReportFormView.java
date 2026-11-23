@@ -3,8 +3,9 @@
 package ph.bantaydagat;
 
 import java.io.IOException; // [F22-B01] Handle copy and save errors
+import java.nio.file.Files; // [F22-B01] Verify previewable local file
 import java.nio.file.Path; // [F22-B01] Selected file stays local until submission
-import javafx.geometry.Pos; // [F22-B01] Align the submit row
+import javafx.geometry.Pos; // [F22-B01] Align the submit row and center form
 import javafx.scene.Node; // [F22-B01] Grow fields evenly
 import javafx.scene.control.Button; // [F22-B01] Form actions
 import javafx.scene.control.ComboBox; // [F22-B01] Category and severity controls
@@ -12,8 +13,11 @@ import javafx.scene.control.Label; // [F22-B01] Form labels and feedback
 import javafx.scene.control.ScrollPane; // [F22-B01] Keep the form usable in a small window
 import javafx.scene.control.TextArea; // [F22-B01] Incident description
 import javafx.scene.control.TextField; // [F22-B01] Latitude and longitude
+import javafx.scene.image.Image; // [F22-B01] Live photo preview
+import javafx.scene.image.ImageView; // [F22-B01] Display photo preview
 import javafx.scene.layout.HBox; // [F22-B01] Paired fields and attachment row
 import javafx.scene.layout.Priority; // [F22-B01] Stretch fields
+import javafx.scene.layout.StackPane; // [F22-B01] Center the form in wide windows
 import javafx.scene.layout.VBox; // [F22-B01] Form layout
 
 public final class ReportFormView extends ScrollPane {
@@ -26,10 +30,12 @@ public final class ReportFormView extends ScrollPane {
     private final ComboBox<WasteCategory> category = new ComboBox<>();
     private final ComboBox<Severity> severity = new ComboBox<>();
     private final TextArea description = new TextArea();
+    private final Label charCount = ViewSupport.styled(new Label("0 characters"), "kpi-caption");
     private final TextField latitude = new TextField();
     private final TextField longitude = new TextField();
     private final Label attachmentName = ViewSupport.styled(new Label("No file selected"), "muted");
     private final Button removeAttachment = ViewSupport.ghostButton("Remove");
+    private final VBox previewBox = new VBox();
     private final VBox feedback = new VBox();
     private Path attachment;
 
@@ -41,7 +47,10 @@ public final class ReportFormView extends ScrollPane {
         configureFields();
         setFitToWidth(true);
         getStyleClass().add("transparent-scroll");
-        setContent(createForm());
+        StackPane wrapper = new StackPane(createForm());
+        wrapper.setAlignment(Pos.TOP_CENTER);
+        wrapper.getStyleClass().add("page");
+        setContent(wrapper);
     }
 
     // [F22-B05] Load the enums and configure the description field
@@ -57,22 +66,29 @@ public final class ReportFormView extends ScrollPane {
         description.setPromptText("What did you see? Include landmarks, size of the spill or amount of waste.");
         description.setWrapText(true);
         description.setPrefRowCount(5);
+        description.textProperty().addListener((obs, old, text) -> {
+            int len = text == null ? 0 : text.trim().length();
+            charCount.setText(len + (len == 1 ? " character" : " characters"));
+        });
     }
 
-    // [F22-B06] Lay out the reporting fields in cards
+    // [F22-B06] Lay out the reporting fields in numbered step cards
     private VBox createForm() {
         String privacy = reporterId == null
                 ? "You are reporting anonymously. Keep names and identifying details out of the text and"
                         + " attachments, including file metadata."
                 : "This report will be saved to My Reports so you can follow its progress.";
-        VBox what = ViewSupport.card(ViewSupport.sectionTitle("1  ·  What did you find?"),
+        HBox countRow = new HBox(charCount);
+        countRow.setAlignment(Pos.CENTER_RIGHT);
+        VBox descField = ViewSupport.field("Description", new VBox(4, description, countRow));
+        VBox what = ViewSupport.card(ViewSupport.sectionStep(1, "What did you find?"),
                 row(ViewSupport.field("Waste category", category), ViewSupport.field("Severity", severity)),
-                ViewSupport.field("Description", description));
-        VBox where = ViewSupport.card(ViewSupport.sectionTitle("2  ·  Where is it?"),
+                descField);
+        VBox where = ViewSupport.card(ViewSupport.sectionStep(2, "Where is it?"),
                 row(ViewSupport.field("Latitude (-90 to 90)", latitude),
                         ViewSupport.field("Longitude (-180 to 180)", longitude)));
-        VBox evidence = ViewSupport.card(ViewSupport.sectionTitle("3  ·  Evidence (optional)"),
-                createAttachmentRow());
+        VBox evidence = ViewSupport.card(ViewSupport.sectionStep(3, "Evidence (optional)"),
+                createAttachmentRow(), previewBox);
         Button submit = ViewSupport.primaryButton("Submit report");
         submit.setOnAction(event -> submit()); // [F22-B06] Connect the button to the submission logic
         HBox actions = new HBox(submit);
@@ -80,7 +96,7 @@ public final class ReportFormView extends ScrollPane {
         VBox page = ViewSupport.page(ViewSupport.header("Report marine waste",
                         "Tell us what you saw and where. Responders use this to plan the cleanup."),
                 ViewSupport.banner("info", privacy), feedback, what, where, evidence, actions);
-        page.setMaxWidth(820);
+        page.setMaxWidth(840);
         return page;
     }
 
@@ -93,15 +109,17 @@ public final class ReportFormView extends ScrollPane {
         return box;
     }
 
-    // [F22-B08] Choose or remove an optional attachment
+    // [F22-B08] Choose or remove an optional attachment with live image preview
     private HBox createAttachmentRow() {
         Button choose = new Button("Choose photo or video");
+        choose.setGraphic(Icons.of(Icons.PAPERCLIP, 14, "icon-primary"));
         choose.setOnAction(event -> {
             Path selected = ViewSupport.chooseFile(getScene().getWindow(), false);
             if (selected != null) {
                 attachment = selected;
                 attachmentName.setText(selected.getFileName().toString());
                 removeAttachment.setVisible(true);
+                updatePreview(selected);
             }
         });
         removeAttachment.setOnAction(event -> clearAttachment());
@@ -109,6 +127,19 @@ public final class ReportFormView extends ScrollPane {
         HBox box = new HBox(12, choose, attachmentName, removeAttachment);
         box.setAlignment(Pos.CENTER_LEFT);
         return box;
+    }
+
+    private void updatePreview(Path file) {
+        previewBox.getChildren().clear();
+        if (file != null && ViewSupport.isPreviewableImage(file.toString()) && Files.isRegularFile(file)) {
+            ImageView img = new ImageView(new Image(file.toUri().toString(), 260, 170, true, true, true));
+            img.setPreserveRatio(true);
+            VBox frame = ViewSupport.styled(new VBox(6,
+                    ViewSupport.styled(new Label("PREVIEW"), "field-label"), img), "thumbnail");
+            frame.setMaxWidth(VBox.USE_PREF_SIZE);
+            previewBox.getChildren().add(frame);
+            Motion.enter(frame);
+        }
     }
 
     // [F22-B09] Submit through IncidentManager and refresh history
@@ -153,5 +184,6 @@ public final class ReportFormView extends ScrollPane {
         attachment = null;
         attachmentName.setText("No file selected");
         removeAttachment.setVisible(false);
+        previewBox.getChildren().clear();
     }
 }
