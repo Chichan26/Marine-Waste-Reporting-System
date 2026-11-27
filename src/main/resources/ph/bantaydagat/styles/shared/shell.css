@@ -1,0 +1,90 @@
+/* FILE: src/main/resources/ph/bantaydagat/styles/shared/shell.css */
+
+/* ---------- App shell ---------- */
+.top-bar {
+    -fx-background-color: -bd-color-surface;
+    -fx-border-color: transparent transparent -bd-color-border transparent;
+}
+
+.top-bar-title {
+    -fx-font-size: 1.143em; /* 16px */
+    -fx-font-weight: bold;
+    -fx-text-fill: -bd-color-primary-pressed;
+}
+
+.top-bar-subtitle {
+    -fx-font-size: 0.857em; /* 12px */
+    -fx-text-fill: -bd-color-text-muted;
+}
+
+.user-pill {
+    -fx-background-color: -bd-pill-bg;
+    -fx-background-radius: 999;
+    -fx-padding: 5 12 5 12;
+    -fx-text-fill: -bd-pill-fg;
+    -fx-font-weight: bold;
+    -fx-font-size: 0.857em; /* 12px */
+}
+
+.sidebar {
+    -fx-background-color: linear-gradient(to bottom, -bd-sidebar-bg-start, -bd-sidebar-bg-end);
+}
+
+.brand-mark {
+    -fx-background-color: -bd-white-12;
+    -fx-background-radius: 10;
+    -fx-padding: 7;
+}
+
+.brand {
+    -fx-font-size: 1.286em; /* 18px */
+    -fx-font-weight: bold;
+    -fx-text-fill: -bd-color-text-inverse;
+}
+
+.brand-tagline {
+    -fx-font-size: 0.857em; /* 12px */
+    -fx-text-fill: -bd-white-65;
+}
+
+.nav-section {
+    -fx-font-size: 0.786em; /* 11px */
+    -fx-font-weight: bold;
+    -fx-text-fill: -bd-white-50;
+    -fx-padding: 4 0 4 6;
+}
+
+.nav-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-text-fill: -bd-nav-fg;
+    -fx-font-weight: normal;
+    -fx-font-size: 1em; /* 14px */
+    -fx-alignment: center-left;
+    -fx-padding: 10 14 10 14;
+    -fx-background-radius: 8;
+    -fx-graphic-text-gap: 10;
+}
+
+.nav-button:hover {
+    -fx-background-color: -bd-nav-hover-bg;
+    -fx-border-color: transparent;
+}
+
+.nav-button:selected {
+    -fx-background-color: -bd-nav-selected-bg;
+    -fx-text-fill: -bd-nav-fg-selected;
+    -fx-font-weight: bold;
+    -fx-border-color: transparent transparent transparent -bd-nav-indicator;
+    -fx-border-width: 0 0 0 3;
+}
+
+.sidebar-footer {
+    -fx-border-color: -bd-white-10 transparent transparent transparent;
+    -fx-padding: 14 6 0 6;
+}
+
+.sidebar-footer-text {
+    -fx-font-size: 0.786em; /* 11px */
+    -fx-text-fill: -bd-white-50;
+}

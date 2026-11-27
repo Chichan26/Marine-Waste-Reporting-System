@@ -1,0 +1,75 @@
+/* FILE: src/main/resources/ph/bantaydagat/styles/pages/login.css */
+
+/* ---------- Login ---------- */
+.login-hero {
+    -fx-background-color: linear-gradient(to bottom right, -bd-hero-bg-start, -bd-hero-bg-end);
+}
+
+/* Animated waves (see Motion.waves) */
+.wave       { -fx-stroke: transparent; }
+.wave-back  { -fx-fill: -bd-wave-back; }
+.wave-mid   { -fx-fill: -bd-wave-mid; }
+.wave-front { -fx-fill: -bd-wave-front; }
+
+.hero-badge {
+    -fx-background-color: -bd-white-12;
+    -fx-background-radius: 999;
+    -fx-padding: 5 12 5 12;
+    -fx-font-size: 0.786em; /* 11px */
+    -fx-font-weight: bold;
+    -fx-text-fill: -bd-color-highlight;
+}
+
+.hero-title {
+    -fx-font-size: 2.857em; /* 40px */
+    -fx-font-weight: bold;
+    -fx-text-fill: -bd-color-text-inverse;
+}
+
+.hero-text {
+    -fx-font-size: 1.143em; /* 16px */
+    -fx-text-fill: -bd-white-92;
+    -fx-line-spacing: 4px;
+}
+
+.hero-check {
+    -fx-background-color: -bd-aqua-300-16;
+    -fx-background-radius: 999;
+    -fx-padding: 5;
+}
+
+.hero-point {
+    -fx-font-size: 1em; /* 14px */
+    -fx-text-fill: -bd-white-92;
+    -fx-line-spacing: 3px;
+}
+
+.demo-hint {
+    -fx-background-color: -bd-color-surface-tint;
+    -fx-border-color: -bd-color-border-subtle;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-padding: 12;
+}
+
+.demo-hint-title {
+    -fx-font-size: 0.857em; /* 12px */
+    -fx-font-weight: bold;
+    -fx-text-fill: -bd-color-text-muted;
+}
+
+.demo-chip {
+    -fx-background-color: -bd-color-surface;
+    -fx-border-color: -bd-color-border;
+    -fx-background-radius: 999;
+    -fx-border-radius: 999;
+    -fx-padding: 4 10 4 10;
+    -fx-font-size: 0.857em; /* 12px */
+    -fx-font-weight: bold;
+    -fx-text-fill: -bd-color-primary;
+}
+
+.demo-chip:hover {
+    -fx-background-color: -bd-color-primary-subtle;
+    -fx-border-color: -bd-color-accent;
+}

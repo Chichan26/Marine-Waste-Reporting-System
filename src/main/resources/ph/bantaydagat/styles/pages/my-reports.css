@@ -1,0 +1,23 @@
+/* FILE: src/main/resources/ph/bantaydagat/styles/pages/my-reports.css */
+
+/* ---------- Summary chips (My Reports) ---------- */
+.stat-chip {
+    -fx-background-color: -bd-card-bg;
+    -fx-border-color: -bd-card-border;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-padding: 10 16 10 16;
+    -fx-alignment: center-left;
+}
+
+.stat-chip-value {
+    -fx-font-size: 1.286em; /* 18px */
+    -fx-font-weight: bold;
+    -fx-text-fill: -bd-color-primary-pressed;
+}
+
+.stat-chip-label {
+    -fx-font-size: 0.857em; /* 12px */
+    -fx-font-weight: bold;
+    -fx-text-fill: -bd-color-text-muted;
+}

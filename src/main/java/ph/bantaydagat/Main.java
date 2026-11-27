@@ -25,6 +25,15 @@ import javafx.scene.layout.Region; // [F27-B01] Spacers
 import javafx.scene.layout.StackPane; // [F27-B01] Brand icon container
 import javafx.scene.layout.VBox; // [F27-B01] Sidebar
 import javafx.stage.Stage; // [F27-B01] Desktop window
+import ph.bantaydagat.pages.AdminView;
+import ph.bantaydagat.pages.DashboardView;
+import ph.bantaydagat.pages.HotlinesView;
+import ph.bantaydagat.pages.LoginView;
+import ph.bantaydagat.pages.MyReportsView;
+import ph.bantaydagat.pages.ReportFormView;
+import ph.bantaydagat.shared.Icons;
+import ph.bantaydagat.shared.Motion;
+import ph.bantaydagat.shared.ViewSupport;
 
 public final class Main extends Application {
     // [F27-B02] Shared app state and root layout
@@ -59,7 +68,13 @@ public final class Main extends Application {
         stage.setMinWidth(980);
         stage.setMinHeight(640);
         Scene scene = new Scene(root, 1220, 780);
-        scene.getStylesheets().add(Main.class.getResource("styles.css").toExternalForm()); // [F27-B04] Theme
+        for (String sheet : new String[] {
+                "styles/shared/tokens.css", "styles/shared/base.css", "styles/shared/shell.css",
+                "styles/shared/reports.css", "styles/pages/login.css", "styles/pages/dashboard.css",
+                "styles/pages/admin.css", "styles/pages/report-form.css", "styles/pages/my-reports.css",
+                "styles/pages/hotlines.css"}) {
+            scene.getStylesheets().add(Main.class.getResource(sheet).toExternalForm()); // [F27-B04] Theme
+        }
         stage.setScene(scene); // [F27-B04] Attach the app layout to the window
         stage.show(); // [F27-B04] A Stage must be shown to display its Scene
     }

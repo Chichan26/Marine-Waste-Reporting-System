@@ -1,0 +1,36 @@
+/* FILE: src/main/resources/ph/bantaydagat/styles/pages/admin.css */
+
+/* ---------- Admin Incident Queue ---------- */
+.search-box {
+    -fx-background-color: -bd-input-bg;
+    -fx-background-radius: 8;
+    -fx-border-color: -bd-input-border;
+    -fx-border-radius: 8;
+    -fx-padding: 0 8 0 10;
+    -fx-alignment: center-left;
+}
+
+.search-box:hover {
+    -fx-border-color: -bd-input-border-hover;
+}
+
+.search-box .text-field {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-padding: 7 6 7 6;
+    -fx-effect: none;
+}
+
+.search-box .text-field:focused {
+    -fx-border-color: transparent;
+    -fx-effect: none;
+}
+
+.count-pill {
+    -fx-background-color: -bd-color-neutral-bg;
+    -fx-background-radius: 999;
+    -fx-padding: 3 10 3 10;
+    -fx-text-fill: -bd-color-neutral-text;
+    -fx-font-size: 0.857em; /* 12px */
+    -fx-font-weight: bold;
+}
