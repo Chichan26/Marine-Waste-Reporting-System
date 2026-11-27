@@ -1,0 +1,39 @@
+/* FILE: src/main/resources/ph/bantaydagat/styles/pages/hotlines.css */
+
+/* ---------- Hotlines ---------- */
+.hotline-card {
+    -fx-padding: 18 20 18 20;
+}
+
+.hotline-emergency {
+    -fx-border-color: -bd-color-danger-border -bd-color-danger-border -bd-color-danger-border -bd-color-danger;
+    -fx-border-width: 1 1 1 4;
+}
+
+.hotline-name {
+    -fx-font-size: 1.143em; /* 16px */
+    -fx-font-weight: bold;
+    -fx-text-fill: -bd-color-text;
+}
+
+.hotline-number {
+    -fx-font-size: 1.571em; /* 22px */
+    -fx-font-weight: bold;
+    -fx-text-fill: -bd-color-primary;
+}
+
+.hotline-emergency .hotline-number {
+    -fx-text-fill: -bd-color-danger-text;
+}
+
+.hyperlink {
+    -fx-text-fill: -bd-color-accent;
+    -fx-underline: true;
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+}
+
+.hyperlink:hover {
+    -fx-text-fill: -bd-color-primary-hover;
+    -fx-underline: true;
+}

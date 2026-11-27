@@ -1,0 +1,14 @@
+/* FILE: src/main/resources/ph/bantaydagat/styles/pages/report-form.css */
+
+/* ---------- Step badges (Report Form) ---------- */
+.step-badge {
+    -fx-background-color: -bd-color-primary-subtle;
+    -fx-text-fill: -bd-color-primary-pressed;
+    -fx-background-radius: 999;
+    -fx-min-width: 24px;
+    -fx-min-height: 24px;
+    -fx-padding: 2 7 2 7;
+    -fx-alignment: center;
+    -fx-font-size: 0.857em; /* 12px */
+    -fx-font-weight: bold;
+}

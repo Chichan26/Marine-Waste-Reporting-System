@@ -1,6 +1,6 @@
 {
   "$schema": "https://design-tokens.org/schema.json",
-  "$description": "BantayDagat 'Ocean' design tokens. Source of truth for src/main/resources/ph/bantaydagat/styles.css. JavaFX names: primitive.color.ocean.600 -> -bd-ocean-600, semantic.color.primary -> -bd-color-primary, component.button.primary.bg -> -bd-button-primary-bg.",
+  "$description": "BantayDagat 'Ocean' design tokens. Source of truth for src/main/resources/ph/bantaydagat/styles/shared/tokens.css. JavaFX names: primitive.color.ocean.600 -> -bd-ocean-600, semantic.color.primary -> -bd-color-primary, component.button.primary.bg -> -bd-button-primary-bg.",
   "primitive": {
     "color": {
       "ocean": {
@@ -99,7 +99,7 @@
       "raised": { "$value": "dropshadow(gaussian, {primitive.color.alpha.ocean-900-14}, 18, 0, 0, 6)", "$type": "shadow" }
     },
     "motion": {
-      "$description": "Implemented in Motion.java. Disable all with -Dbantaydagat.motion=off.",
+      "$description": "Implemented in shared/Motion.java. Disable all with -Dbantaydagat.motion=off.",
       "fast":    { "$value": "150ms", "$type": "duration", "$description": "Hover lift, button press" },
       "normal":  { "$value": "220ms", "$type": "duration" },
       "slow":    { "$value": "300ms", "$type": "duration", "$description": "Screen/card/banner enter, shake" },

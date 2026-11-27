@@ -5,7 +5,11 @@ A three-layer token system for the BantayDagat JavaFX app, built on deep ocean b
 | File | Role |
 |------|------|
 | [`design/design-tokens.json`](../design/design-tokens.json) | Source of truth for all tokens (W3C design-token format) |
-| [`src/main/resources/ph/bantaydagat/styles.css`](../src/main/resources/ph/bantaydagat/styles.css) | The tokens implemented as JavaFX looked-up colors, plus all component styles |
+| [`src/main/resources/ph/bantaydagat/styles/shared/tokens.css`](../src/main/resources/ph/bantaydagat/styles/shared/tokens.css) | The tokens implemented as JavaFX looked-up colors (`.root`, `.root.dark`) |
+| [`styles/shared/`](../src/main/resources/ph/bantaydagat/styles/shared) | Shared component styles: `base.css`, `shell.css`, `reports.css` |
+| [`styles/pages/`](../src/main/resources/ph/bantaydagat/styles/pages) | Per-page styles: `login`, `dashboard`, `admin`, `report-form`, `my-reports`, `hotlines` |
+
+All stylesheets are registered in order by `Main.showWindow` (JavaFX CSS has no `@import`).
 
 ## 1. Token architecture
 
@@ -120,7 +124,7 @@ KPI cards have a 4 px left accent: `.kpi-accent-ocean` (accent), `-amber` (warni
 
 ## 5. Motion
 
-Motion is subtle and professional. Every animation lives in [`Motion.java`](../src/main/java/ph/bantaydagat/Motion.java). Only the login waves loop.
+Motion is subtle and professional. Every animation lives in [`Motion.java`](../src/main/java/ph/bantaydagat/shared/Motion.java). Only the login waves loop.
 
 | Token | Value | Used for |
 |-------|-------|----------|
@@ -150,10 +154,10 @@ Wave colors are component tokens: `-bd-wave-back` (white @ 6 %), `-bd-wave-mid` 
 1. **Never put hex or rgba below the `.root` block.** Add a primitive, then alias it.
 2. Component rules should reference **semantic or component** tokens, not primitives (alpha primitives such as `-bd-white-16` on the dark sidebar are the exception).
 3. **Dark mode (`.root.dark`)** overrides only the semantic layer using deep `abyss` surfaces (`#0D1824` – `#1F374F`) and dark-safe feedback `900`/`200` pairs. Toggle it at runtime via `ViewSupport.themeToggle(darkMode)`.
-4. Update `design-tokens.json` and `styles.css` together.
+4. Update `design-tokens.json` and `styles/shared/tokens.css` together.
 
 ### Quick check
 ```bash
 # Should print nothing: raw colors outside the .root token block
-awk '/^\.root/{r=1} r&&/^}/{r=0;next} !r' src/main/resources/ph/bantaydagat/styles.css | grep -nE "#[0-9A-Fa-f]{3,6}|rgba?\("
+cat src/main/resources/ph/bantaydagat/styles/shared/*.css src/main/resources/ph/bantaydagat/styles/pages/*.css | awk '/^\.root/{r=1} r&&/^}/{r=0;next} !r' | grep -nE "#[0-9A-Fa-f]{3,6}|rgba?\("
 ```

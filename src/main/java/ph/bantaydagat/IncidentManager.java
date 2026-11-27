@@ -194,7 +194,7 @@ public final class IncidentManager {
     }
 
     // [F16-B18] Resolve a stored path for the admin to open
-    Path attachmentPath(String storedPath) {
+    public Path attachmentPath(String storedPath) {
         return dataFile.resolveSibling(storedPath);
     }
 
